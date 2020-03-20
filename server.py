@@ -63,7 +63,9 @@ def index():
     db.drop_all()
     db.create_all()
     db.session.add(Song(year="2020", title="No time to die",
-                        artist="Billie Eillish", language="english", genre="pop", duration="3:50"))
+                        artist="Billie Eillish", language="English", genre="pop", duration="3:50"))
+    db.session.add(Song(year="2010", title="I don't care",
+                        artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
     db.session.commit()
     users = Song.query.all()
     print(users[0].title)
