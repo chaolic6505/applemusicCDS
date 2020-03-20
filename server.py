@@ -34,6 +34,7 @@ class Song(db.Model):
     count_total_played = db.Column(db.Integer)
 
     artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
+
     song_playlist_relationship = db.relationship('Artist', secondary=song_playlist_relationship, lazy='subquery',
                                                  backref=db.backref('Song', lazy=True))
 
@@ -64,12 +65,15 @@ def index():
     db.create_all()
     db.session.add(Song(year="2020", title="No time to die",
                         artist="Billie Eillish", language="English", genre="pop", duration="3:50"))
-    db.session.add(Song(year="2010", title="I don't care",
+    db.session.add(Song(year="2019", title="I don't care",
                         artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
+    db.session.add(Song(year="2019", title="I don't care",
+                        artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
+
     db.session.commit()
     users = Song.query.all()
-    print(users[0].title)
-    return render_template('index.html', user=users[0].title)
+    # print(users[0].title)
+    return render_template('index.html', users=users)
     # return render_template('index.html')
 
 
