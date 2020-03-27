@@ -1,0 +1,27 @@
+{% extends "header.html" %} 
+{% block content %} {% for user in users %}
+<div class="list-container">
+	<div class="row">
+		<div class="col-sm">
+			Tilte : {{ user.title }}
+		</div>
+		<div class="col-sm">
+			Artist : {{ user.artist }}
+		</div>
+		<div class="col-sm">
+			Genre : {{ user.genre }}
+		</div>
+		<div class="col-sm">
+			Duration : {{ user.duration }}
+		</div>
+		<div class="col-sm">
+			Rating
+		</div>
+		<div class="col-sm">
+			Album
+		</div>
+	</div>
+</div>
+{% endfor %}{% endblock content %}
+
+
