@@ -69,9 +69,9 @@ def index():
                         artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
     db.session.commit()
     users = Song.query.all()
-    # print(users[0].title)
+
     return render_template('finalIndex.html', users=users)
-    # return render_template('index.html')
+
 
 
 # @app.route('/', methods=['GET', 'POST'])

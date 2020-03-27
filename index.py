@@ -1,4 +1,6 @@
 class Song:
+    __tablename__ = 'songs'
+
     def __init__(self, year, title, artist, language, genre, album, duration=0, count=0, lyrics=None):
         self.title = title
         self.year = year
@@ -34,11 +36,14 @@ class Song:
 
     def get_album (self):
         return self.album
+
     def __str__(self):
         return {'year': self.year, 'title': self.title, 'artist': self.artist, 'language': self.language, 'genre': self.genre, 'duration': self.duration, "Album": self.album}
 
 
 class Album:
+    __tablename__ = 'albums'
+
     def __init__(self, album_name, year, cover_photo, artist):
         self.album_name = album_name
         self.year = year
@@ -69,6 +74,8 @@ class Album:
 
 
 class Artist:
+    __tablename__ = 'artists'
+    
     def __init__(self, name, artist_photo = None, country = None, genre = None):
         self.name = name
         self.country = country

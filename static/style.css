@@ -1,3 +1,8 @@
+* {
+    margin: auto;
+    padding: auto;
+}
+
 .function-bar {
     margin-top: 20px;
     display: flex;
@@ -8,7 +13,7 @@
     margin-left: 100px;
 }
 
-.switch{
+.switch {
     margin: auto;
 }
 
@@ -24,7 +29,12 @@
 .list-container {
     margin-top: 20px;
     text-align: center;
-    
 }
 
+.row :nth-child(even) {
+    background-color: #dcdcdc;
+}
 
+.row :nth-child(odd) {
+    background-color: black;
+}

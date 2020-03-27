@@ -1,122 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- <style>
-		.function-bar {
-			margin-top: 20px;
-			display: flex;
-			margin-left: 50px;
-		}
 
-		.navbar {
-			margin-left: 100px;
-		}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet " integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN " crossorigin="anonymous ">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Document</title>
+</head>
 
-		.switch {
-			margin: auto;
-		}
+<body>
+    <section>
 
-		.music-info {
-			border: 2px solid rgb(219, 219, 215);
-			border-radius: 5px;
-			padding-left: 300px;
-			padding-right: 300px;
-			padding-top: 3px;
-			padding-bottom: 3px;
-		}
 
-		.list-container {
-			margin-top: 20px;
-			text-align: center;
-		}
-	</style> -->
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			rel="stylesheet"
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-			crossorigin="anonymous"
-		/>
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-		<title>Document</title>
-	</head>
+        <div class="navbar ">
+            <div class="media-button ">
+                <nav>
+                    <img src="{{ url_for( 'static', filename='rendom.png' ) }} " alt=" " />
+                    <img src="{{ url_for( 'static', filename='back.png' ) }} " alt=" " />
+                    <img src="{{ url_for( 'static', filename='play.png' ) }} " alt=" " />
+                    <img src="{{ url_for( 'static', filename='skip.png' ) }} " alt=" " />
+                    <img src="{{ url_for( 'static', filename='repeat.png' ) }} " alt=" " />
+                </nav>
+            </div>
 
-	<body>
-		<div class="navbar">
-			<div class="media-button">
-				<nav>
-					<img src="{{ url_for('static', filename='rendom.png') }}" alt="" />
-					<img src="{{ url_for('static', filename='back.png') }}" alt="" />
-					<img src="{{ url_for('static', filename='play.png') }}" alt="" />
-					<img src="{{ url_for('static', filename='skip.png') }}" alt="" />
-					<img src="{{ url_for('static', filename='repeat.png') }}" alt="" />
-				</nav>
-			</div>
+            <div class="music-info ">
+                <img src="{{ url_for( 'static', filename='apple.png' ) }} " alt=" " />
+            </div>
 
-			<div class="music-info">
-				<img src="{{ url_for('static', filename='apple.png') }}" alt="" />
-			</div>
+            <div class="volume ">
+                <span><i class="fa fa-volume-up" aria-hidden="true"></i></span>
+                <input type="range" min="1" max="100" value="50" id="myNumber">
+            </div>
 
-			<div class="volumn">
-				<img src="{{ url_for('static', filename='volumn.png') }}volumn.png" alt="" />
-				<input type="range" min="1" max="100" value="50" />
-			</div>
+            <div class="signin-button ">
+                <a class="btn btn-primary " href="# " role="button ">Log In</a>
+                <a class="btn btn-primary " href="# " role="button ">Log Out</a>
 
-			<div class="signin-button">
-				<button type="button" class="btn btn-primary">Sign In</button>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="function-bar">
-			<nav class="add-song">
-				<button type="button" class="btn btn-primary">Add Song</button>
-			</nav>
-			<div class="switch">
-				<button type="button" class="btn btn-primary">Songs</button>
-				<button type="button" class="btn btn-primary">Albums</button>
-			</div>
-		</div>
+        <div class="function-bar ">
+            <nav class="add-song ">
+                <button type="button " class="btn btn-primary ">Add Song</button>
+            </nav>
+            <div class="switch ">
+                <a class="btn btn-primary " href="# " role="button ">Songs</a>
+                <a class="btn btn-primary " href="# " role="button ">Albums</a>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="list-container-box" style="margin:3rem;">
+            <div class="list-container ">
+                <div class="row ">
+                    <div class="d-flex justify-content-start col-sm title-box">
+                        <span class="border-bottom-0">Title</span>
+                    </div>
+                    <div class="d-flex justify-content-start col-sm title-box">
+                        Artist
+                    </div>
+                    <div class="d-flex justify-content-start col-sm title-box">
+                        Genre
+                    </div>
+                    <div class="d-flex justify-content-start col-sm title-box">
+                        Rating
+                    </div>
+                    <div class="d-flex justify-content-start col-sm title-box">
+                        Album
+                    </div>
+                    <div class="col-sm ">
+                        Actions
+                    </div>
+                </div>
 
-		{% for user in users %}
-		<div class="list-container">
-			<div class="row">
-				<div class="col-sm">
-					Tilte : {{ user.title }}
-				</div>
-				<div class="col-sm">
-					Artist : {{ user.artist }}
-				</div>
-				<div class="col-sm">
-					Genre : {{ user.genre }}
-				</div>
-				<div class="col-sm">
-					Duration : {{ user.duration }}
-				</div>
-				<div class="col-sm">
-					Rating
-				</div>
-				<div class="col-sm">
-					Album
-				</div>
-			</div>
-		</div>
-		{% endfor %}
 
-		<script
-			src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-			crossorigin="anonymous"
-		></script>
-	</body>
+                {% for user in users %}
+
+                <div class="row ">
+                    <div class="d-flex justify-content-start col-sm ">
+                        {{ user.title }}
+                    </div>
+                    <div class="d-flex justify-content-start col-sm ">
+                        {{ user.artist }}
+                    </div>
+                    <div class="d-flex justify-content-start col-sm ">
+                        {{ user.genre }}
+                    </div>
+                    <div class="d-flex justify-content-start col-sm ">
+                        {{user.rating or 'unrated'}}
+                    </div>
+                    <div class="d-flex justify-content-start col-sm ">
+                        Album
+                    </div>
+                    <div class="col-sm d-flex justify-content-around">
+                        <span><i class="fa fa-pencil-square" aria-hidden="true"></i></span>
+                        <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <footer>
+
+    </footer>
+
+</body>
+
 </html>
