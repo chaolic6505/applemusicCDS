@@ -79,10 +79,10 @@ a:hover {
 	text-align: center;
 }
 
-.each-row :nth-child(even) {
+/* .each-row :nth-child(even) {
 	background-color: #dcdcdc !important;
 }
 
 .each-row :nth-child(odd) {
 	background-color: black !important;
-}
+} */
