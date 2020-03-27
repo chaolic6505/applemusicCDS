@@ -65,6 +65,7 @@ def index():
     db.create_all()
     db.session.add(Song(year="2020", title="No time to die",
                         artist="Billie Eillish", language="English", genre="pop", duration="3:50"))
+<<<<<<< HEAD
     db.session.add(Song(year="2019", title="I don't care",
                         artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
     db.session.add(Song(year="2019", title="I don't care",
@@ -142,12 +143,14 @@ def index():
     db.create_all()
     db.session.add(Song(year="2020", title="No time to die",
                         artist="Billie Eillish", language="English", genre="pop", duration="3:50"))
+=======
+>>>>>>> 03a047c46ffead57481d71eeef358d01ec2454f3
     db.session.add(Song(year="2010", title="I don't care",
                         artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
     db.session.commit()
     users = Song.query.all()
     # print(users[0].title)
-    return render_template('index.html', users=users)
+    return render_template('finalIndex.html', users=users)
     # return render_template('index.html')
 
 
@@ -155,6 +158,7 @@ def index():
 def edit_song():
     return render_template('modifySongDetails.html')
 
+<<<<<<< HEAD
 # @app.route('/', methods=['GET', 'POST'])
 # def index():
 #     search = User(request.form)
@@ -173,6 +177,8 @@ def edit_song():
 if __name__ == "__main__":
     app.run(debug=True, port=6969)
 
+=======
+>>>>>>> 03a047c46ffead57481d71eeef358d01ec2454f3
 # @app.route('/', methods=['GET', 'POST'])
 # def index():
 #     search = User(request.form)
