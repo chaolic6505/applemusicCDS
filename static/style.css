@@ -1,13 +1,10 @@
-a {
-	color: white !important; 
-	font-family: 'Montserrat', sans-serif !important;
-	text-decoration: none important;
-	transition: color 0.3s ease-in-out !important;
-	-moz-transition: color 0.3s ease-in-out !important;
+* {
+	margin: auto;
+	padding: auto;
 }
 a:hover {
-	-webkit-animation: zomg 0.5s infinite !important; 
-	animation: zomg 0.5s infinite !important;
+	-webkit-animation: zomg 0.5s infinite;
+	animation: zomg 0.5s infinite;
 }
 
 @-webkit-keyframes zomg {
@@ -53,6 +50,7 @@ a:hover {
 		color: #ff4136;
 	}
 }
+
 .function-bar {
 	margin-top: 20px;
 	display: flex;
@@ -80,3 +78,11 @@ a:hover {
 	margin-top: 20px;
 	text-align: center;
 }
+
+/* .each-row :nth-child(even) {
+	background-color: #dcdcdc !important;
+}
+
+.each-row :nth-child(odd) {
+	background-color: black !important;
+} */
