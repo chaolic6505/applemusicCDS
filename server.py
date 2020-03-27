@@ -140,6 +140,7 @@ def edit_song():
     return render_template('modifySongDetails.html')
 
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config.update(
     UPLOADED_PATH=os.path.join(basedir, 'upload'),
@@ -149,6 +150,7 @@ app.config.update(
     DROPZONE_MAX_FILES=20,
     DROPZONE_UPLOAD_ON_CLICK=True
 )
+dropzone = Dropzone(app)
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == 'POST':
