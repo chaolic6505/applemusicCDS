@@ -74,6 +74,10 @@ def index():
     # return render_template('index.html')
 
 
+@app.route('/editSong')
+def edit_song():
+    return render_template('modifySongDetails.html')
+
 # @app.route('/', methods=['GET', 'POST'])
 # def index():
 #     search = User(request.form)
