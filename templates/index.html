@@ -1,27 +1,114 @@
-{% extends "header.html" %} 
-{% block content %} {% for user in users %}
-<div class="list-container">
-	<div class="row">
-		<div class="col-sm">
-			Tilte : {{ user.title }}
-		</div>
-		<div class="col-sm">
-			Artist : {{ user.artist }}
-		</div>
-		<div class="col-sm">
-			Genre : {{ user.genre }}
-		</div>
-		<div class="col-sm">
-			Duration : {{ user.duration }}
-		</div>
-		<div class="col-sm">
-			Rating
-		</div>
-		<div class="col-sm">
-			Album
-		</div>
-	</div>
-</div>
-{% endfor %}{% endblock content %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css "
+			rel="stylesheet "
+			integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN "
+			crossorigin="anonymous "
+		/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+		<title>Document</title>
+	</head>
 
+	<body>
+		<section>
+			<div class="navbar ">
+				<div class="media-button ">
+					<nav>
+						<img src="{{ url_for( 'static', filename='rendom.png' ) }} " alt=" " />
+						<img src="{{ url_for( 'static', filename='back.png' ) }} " alt=" " />
+						<img src="{{ url_for( 'static', filename='play.png' ) }} " alt=" " />
+						<img src="{{ url_for( 'static', filename='skip.png' ) }} " alt=" " />
+						<img src="{{ url_for( 'static', filename='repeat.png' ) }} " alt=" " />
+					</nav>
+				</div>
 
+				<div class="music-info ">
+					<img src="{{ url_for( 'static', filename='apple.png' ) }} " alt=" " />
+				</div>
+
+				<div class="volume ">
+					<span><i class="fa fa-volume-up" aria-hidden="true"></i></span>
+					<input type="range" min="1" max="100" value="50" id="myNumber" />
+				</div>
+
+				<div class="signin-button ">
+					<a class="btn btn-primary " href="# " role="button ">Log In</a>
+					<a class="btn btn-primary " href="# " role="button ">Log Out</a>
+				</div>
+			</div>
+
+			<div class="function-bar ">
+				<nav class="add-song ">
+					<button type="button " class="btn btn-primary ">Add Song</button>
+				</nav>
+				<div class="switch ">
+					<a class="btn btn-primary " href="# " role="button ">Songs</a>
+					<a class="btn btn-primary " href="# " role="button ">Albums</a>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="list-container-box" style="margin:3rem;">
+				<div class="list-container ">
+					<div class="row ">
+						<div class="d-flex justify-content-start col-sm title-box">
+							<span class="border-bottom-0">Title</span>
+						</div>
+						<div class="d-flex justify-content-start col-sm title-box">
+							Artist
+						</div>
+						<div class="d-flex justify-content-start col-sm title-box">
+							Genre
+						</div>
+						<div class="d-flex justify-content-start col-sm title-box">
+							Rating
+						</div>
+						<div class="d-flex justify-content-start col-sm title-box">
+							Album
+						</div>
+						<div class="col-sm ">
+							Actions
+						</div>
+					</div>
+
+					{% for user in users %}
+
+					<div class="row ">
+						<div class="d-flex justify-content-start col-sm ">
+							{{ user.title }}
+						</div>
+						<div class="d-flex justify-content-start col-sm ">
+							{{ user.artist }}
+						</div>
+						<div class="d-flex justify-content-start col-sm ">
+							{{ user.genre }}
+						</div>
+						<div class="d-flex justify-content-start col-sm ">
+							{{user.rating or 'unrated'}}
+						</div>
+						<div class="d-flex justify-content-start col-sm ">
+							Album
+						</div>
+						<div class="col-sm d-flex justify-content-around">
+							<span><i class="fa fa-pencil-square" aria-hidden="true"></i></span>
+							<span><i class="fa fa-trash" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</section>
+		<footer></footer>
+	</body>
+</html>
