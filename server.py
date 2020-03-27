@@ -1,5 +1,11 @@
 import os
+import boto3
 
+from dotenv import load_dotenv
+load_dotenv()
+S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
+S3_Bucket_Name = 'cds-apple-music'
 from flask import Flask, render_template, url_for,request
 from flask_sqlalchemy import SQLAlchemy
 from flask_dropzone import Dropzone
@@ -141,9 +147,10 @@ def edit_song():
 
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+# basedir = os.path.abspath(os.path.dirname(__file__))
+
 app.config.update(
-    UPLOADED_PATH=os.path.join(basedir, 'upload'),
+    # UPLOADED_PATH=os.path.join(basedir, 'upload'),
     # Flask-Dropzone config:
     DROPZONE_ALLOWED_FILE_TYPE='audio',
     DROPZONE_MAX_FILE_SIZE=100,
@@ -151,12 +158,17 @@ app.config.update(
     DROPZONE_UPLOAD_ON_CLICK=True
 )
 dropzone = Dropzone(app)
+s3 = boto3.resource('s3',aws_access_key_id=S3_ACCESS_KEY,
+            aws_secret_access_key=SECRET_KEY,)
+
+
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == 'POST':
         for key, f in request.files.items():
             if key.startswith('file'):
-                f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+                # f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+                s3.Bucket(S3_Bucket_Name).put_object(Key= f.filename, Body=f.filename)
     return render_template('index.html')
 
 # @app.route('/', methods=['GET', 'POST'])
