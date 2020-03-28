@@ -1,24 +1,26 @@
 {% extends "header.html" %}{% block content %}
 <div class="container">
 	<h1>Song Details</h1>
-	<form>
+	<form method="POST" action="/saveSongInfo/{{id }}">
 		<div class="form-group">
-			<label for="exampleFormControlInput1">Title</label>
+			{{ form.new_song_title.label }}<br> {{ form.new_song_title(class="form-control") }}
+			<!-- <label for="exampleFormControlInput1">Title</label>
 			<input
 				type="email"
 				class="form-control"
 				id="exampleFormControlInput1"
 				placeholder=""
-			/>
+			/> -->
 		</div>
 		<div class="form-group">
-			<label for="exampleFormControlInput1">Artist</label>
+			{{ form.new_song_artist.label }}<br> {{ form.new_song_artist(class="form-control") }}
+			<!-- <label for="exampleFormControlInput1">Artist</label>
 			<input
 				type="email"
 				class="form-control"
 				id="exampleFormControlInput1"
 				placeholder=""
-			/>
+			/> -->
 		</div>
 		<div class="form-group">
 			<label for="exampleFormControlInput1">Lyrics</label>
@@ -30,17 +32,13 @@
 			/>
 		</textarea>
 		<div class="form-group">
-			<label for="exampleFormControlSelect1">Rating</label>
-			<select class="form-control" id="exampleFormControlSelect1">
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-			</select>
+			{{ form.new_song_rating.label }}<br> {{ form.new_song_rating (class="form-control") }}
+		</div>
+		<div class="form-group ">
+			{{ form.submit(class="btn btn-outline-info  btn-primary") }}
+			<!-- <a class="btn btn-primary " href="/saveSongInfo/{{id}}" role="button ">Save</a> -->
 		</div>
 	</form>
-	<div class="switch ">
-		<a class="btn btn-primary " href="/save " role="button ">Save</a>
-	</div>
+	
 </div>
 {% endblock content %}
