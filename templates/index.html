@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 		<title>Document</title>
 		{{ dropzone.load_css() }} {{ dropzone.style('border: 2px dashed #0087F7; margin:
-		10px 0 10px; min-height: 400px;') }}
+		10px 0 10px; min-height: 200px;') }}
 	</head>
 
 	<body>
@@ -67,7 +67,7 @@
 						</div>
 						<div class="modal-body mx-3">
 							<div class="md-form mb-2">
-								<label data-error="wrong" data-success="right" for="form34">Song name</label>
+								<label data-error="wrong" data-success="right" for="form34">Song Title</label>
 								<input type="text" id="form34" class="form-control validate" />
 							</div>
 
@@ -141,6 +141,9 @@
 						<div class="d-flex justify-content-start col-sm title-box">
 							Album
 						</div>
+						<div class="d-flex justify-content-start col-sm title-box">
+							ID
+						</div>
 						<div class="col-sm ">
 							Actions
 						</div>
@@ -164,9 +167,12 @@
 						<div class="d-flex justify-content-start col-sm ">
 							Album
 						</div>
+						<div class="d-flex justify-content-start col-sm ">
+							{{user.id }}
+						</div>
 						<div class="col-sm d-flex justify-content-around">
-							<span><i class="fa fa-pencil-square" aria-hidden="true"></i></span>
-							<span><i class="fa fa-trash" aria-hidden="true"></i></span>
+							<a class="fa fa-lg fa-pencil-square btn-danger" aria-hidden="true" href="/editSong/{{user.id }} " role="button "></a>
+							<a class="fa fa-lg fa-trash btn-secondary" aria-hidden="true" href="/deleteSong/{{user.id }} " role="button "></a>
 						</div>
 					</div>
 				</div>
