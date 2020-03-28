@@ -148,6 +148,7 @@
 							Actions
 						</div>
 					</div>
+					<br />
 
 					{% for user in users %}
 
@@ -171,11 +172,22 @@
 							{{user.id }}
 						</div>
 						<div class="col-sm d-flex justify-content-around">
-							<a class="fa fa-lg fa-pencil-square btn-danger" aria-hidden="true" href="/editSong/{{user.id }} " role="button "></a>
-							<a class="fa fa-lg fa-trash btn-secondary" aria-hidden="true" href="/deleteSong/{{user.id }} " role="button "></a>
+							<a
+								class="fa fa-lg fa-pencil-square btn-danger"
+								aria-hidden="true"
+								href="/editSong/{{user.id }} "
+								role="button "
+							></a>
+							<a
+								class="fa fa-lg fa-trash btn-secondary"
+								aria-hidden="true"
+								href="/deleteSong/{{user.id }} "
+								role="button "
+							></a>
 						</div>
 					</div>
 				</div>
+				<br />
 				{% endfor %}
 			</div>
 		</section>

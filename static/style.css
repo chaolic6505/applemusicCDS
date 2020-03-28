@@ -2,6 +2,9 @@
 	margin: auto;
 	padding: auto;
 }
+a {
+	color: white !important;
+}
 /* a:hover {
 	-webkit-animation: zomg 0.5s infinite;
 	animation: zomg 0.5s infinite;
