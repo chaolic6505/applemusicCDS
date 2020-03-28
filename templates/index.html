@@ -18,6 +18,11 @@
 		/>
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 		<title>Document</title>
+<<<<<<< HEAD
+=======
+		{{ dropzone.load_css() }} {{ dropzone.style('border: 2px dashed #0087F7; margin:
+		10px 0 10px; min-height: 400px;') }}
+>>>>>>> steven
 	</head>
 
 	<body>
@@ -64,6 +69,7 @@
 							</button>
 						</div>
 						<div class="modal-body mx-3">
+<<<<<<< HEAD
 							<div class="md-form mb-5">
 								<input type="text" id="form34" class="form-control validate" />
 								<label data-error="wrong" data-success="right" for="form34">Song name</label>
@@ -94,6 +100,44 @@
 								Add 
 							</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+=======
+							<div class="md-form mb-2">
+								<label data-error="wrong" data-success="right" for="form34">Song name</label>
+								<input type="text" id="form34" class="form-control validate" />
+							</div>
+
+							<div class="md-form mb-2">
+								<label data-error="wrong" data-success="right" for="form29">Artist</label>
+								<input type="email" id="form29" class="form-control validate" />
+							</div>
+
+							<div class="md-form mb-2">
+								<label data-error="wrong" data-success="right" for="form32">Album Name</label>
+								<input type="text" id="form32" class="form-control validate" />
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect1">Rating</label>
+								<select class="form-control" id="exampleFormControlSelect1">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								</select>
+							</div>
+							<div class="md-form">
+								{{ dropzone.create('/upload') }}
+								<button id="upload" class="btn  btn-primary">Upload</button>
+								{{ dropzone.load_js() }} {{ dropzone.config() }}
+							</div>
+						</div>
+						<div class="modal-footer d-flex justify-content-center">
+							<!-- <button class="btn  btn-primary" id="upload">
+								Add
+							</button> -->
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								Close
+							</button>
+>>>>>>> steven
 						</div>
 					</div>
 				</div>

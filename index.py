@@ -1,4 +1,6 @@
 class Song:
+    __tablename__ = 'songs'
+
     def __init__(self, year, title, artist, language, genre, album, duration=0, count=0, lyrics=None):
         self.title = title
         self.year = year
