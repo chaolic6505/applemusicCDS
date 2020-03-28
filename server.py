@@ -11,7 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_dropzone import Dropzone
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
+
 db = SQLAlchemy(app)
 
 
@@ -42,6 +42,7 @@ class Song(db.Model):
     _tablename__ = 'songs'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     year = db.Column(db.Integer)
+    rating = db.Column(db.Integer)
     title = db.Column(db.String, nullable=False)
     artist = db.Column(db.String)
     language = db.Column(db.String(10))
@@ -84,9 +85,9 @@ class Playlist (db.Model):
 def index():
     db.drop_all()
     db.create_all()
-    db.session.add(Song(year="2020", title="No time to die",
+    db.session.add(Song(year="2020",rating=1, title="No time to die",
                         artist="Billie Eillish", language="English", genre="pop", duration="3:50"))
-    db.session.add(Song(year="2010", title="I don't care",
+    db.session.add(Song(year="2010",rating=4, title="I don't care",
                         artist="Ed Sheeran ft Justin Bieber", language="English", genre="pop", duration="3:40"))
     db.session.commit()
     users = Song.query.all()
@@ -97,7 +98,7 @@ def index():
 
 @app.route('/editSong/<song_id>')
 def edit_song(song_id):
-    
+
     return render_template('modifySongDetails.html')
 
 
@@ -151,7 +152,7 @@ def upload():
 #     user = User.query.filter_by(username=username).first_or_404()
 #     return render_template('show_user.html', user=user)
 
-
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 if __name__ == "__main__":
     app.run(debug=True, port=6969)
 
