@@ -2,7 +2,7 @@
 	margin: auto;
 	padding: auto;
 }
-a {
+.save,a {
 	color: white !important;
 }
 /* a:hover {
