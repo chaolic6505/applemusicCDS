@@ -47,6 +47,7 @@ song_playlist_relationship = db.Table('song_playlist_relationship',
 class EditSongInformationForm(Form):
     new_song_title = StringField('Title', [validators.DataRequired(message='Field required')])
     new_song_artist = StringField('Artist', [validators.DataRequired(message='Field required')])
+    new_song_album = StringField('Album Name')
     new_song_rating = SelectField('Rating (From 0 to 5)',
                                  choices=[('0', '0'),('1', '1'), ('2', '2'), ('3', '3'),('4', '4'), ('5', '5')],
                                  default='unrated')
@@ -96,6 +97,7 @@ class Playlist (db.Model):
 
 @app.route('/')
 def index():
+    form = EditSongInformationForm(request.form)
     db.drop_all()
     db.create_all()
     db.session.add(Song(year="2020", rating=1, title="No time to die",
@@ -105,7 +107,7 @@ def index():
     db.session.commit()
     users = Song.query.all()
     # print(users[0].title)
-    return render_template('index.html', users=users)
+    return render_template('index.html', users=users,form=form )
     # return render_template('index.html')
 
 

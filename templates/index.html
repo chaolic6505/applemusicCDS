@@ -18,21 +18,26 @@
 		/>
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 		<title>Document</title>
-		{{ dropzone.load_css() }} {{ dropzone.style('border: 2px dashed #0087F7; margin:
+		{{ dropzone.load_css() }} {{ dropzone.style('border: 2px dashed yellow; margin:
 		10px 0 10px; min-height: 200px;') }}
+		<link rel="icon" href="data:,">
 	</head>
 
 	<body>
+		<audio class="" controls autoplay preload="auto" autobuffer loop>
+			<source src="{{ url_for('static', filename='test.mp3') }}" type="audio/ogg" />
+		</audio>
+
 		<section>
 			<div class="navbar ">
 				<div class="media-button ">
-					<nav>
+					<!-- <nav>
 						<img src="{{ url_for( 'static', filename='rendom.png' ) }} " alt=" " />
 						<img src="{{ url_for( 'static', filename='back.png' ) }} " alt=" " />
 						<img src="{{ url_for( 'static', filename='play.png' ) }} " alt=" " />
 						<img src="{{ url_for( 'static', filename='skip.png' ) }} " alt=" " />
 						<img src="{{ url_for( 'static', filename='repeat.png' ) }} " alt=" " />
-					</nav>
+					</nav> -->
 				</div>
 
 				<div class="music-info ">
@@ -45,9 +50,6 @@
 				</div>
 
 				<div class="signin-button ">
-					
-			
-		</div>
 					<a
 						data-toggle="modal"
 						data-target="#modalContactForm"
@@ -58,7 +60,6 @@
 					>
 					<a class="btn btn-primary " href="# " role="button ">Log Out</a>
 				</div>
-				
 			</div>
 
 			<div
@@ -73,44 +74,36 @@
 					<div class="modal-content">
 						<div class="modal-header text-center">
 							<h4 class="modal-title w-100 font-weight-bold">Add Song</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
 						</div>
 						<div class="modal-body mx-3">
 							<div class="md-form mb-2">
-								<label data-error="wrong" data-success="right" for="form34">Song Title</label>
-								<input type="text" id="form34" class="form-control validate" />
+								{{ form.new_song_title.label }}<br />
+								{{ form.new_song_title(class="form-control") }}
 							</div>
 
 							<div class="md-form mb-2">
-								<label data-error="wrong" data-success="right" for="form29">Artist</label>
-								<input type="email" id="form29" class="form-control validate" />
+								{{ form.new_song_artist.label }}<br />
+								{{ form.new_song_artist(class="form-control") }}
 							</div>
 
 							<div class="md-form mb-2">
-								<label data-error="wrong" data-success="right" for="form32">Album Name</label>
-								<input type="text" id="form32" class="form-control validate" />
+								{{ form.new_song_album.label }}<br />
+								{{ form.new_song_album(class="form-control") }}
 							</div>
 							<div class="form-group">
-								<label for="exampleFormControlSelect1">Rating</label>
-								<select class="form-control" id="exampleFormControlSelect1">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-								</select>
+								{{ form.new_song_rating.label }}<br />
+								{{ form.new_song_rating (class="form-control") }}
 							</div>
 							<div class="md-form">
-								{{ dropzone.create('/upload') }}
-								<button id="upload" class="btn  btn-primary">Upload</button>
-								{{ dropzone.load_js() }} {{ dropzone.config() }}
+								{{ dropzone.create('/upload') }} {{ dropzone.load_js() }} {{ dropzone.config()
+								}}
 							</div>
 						</div>
 						<div class="modal-footer d-flex justify-content-center">
 							<!-- <button class="btn  btn-primary" id="upload">
 								Add
 							</button> -->
+							<button id="upload" class="btn  btn-primary">Upload</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">
 								Close
 							</button>
@@ -153,7 +146,7 @@
 						<div class="d-flex justify-content-start col-sm title-box">
 							Album
 						</div>
-					
+
 						<div class="col-sm ">
 							Actions
 						</div>
@@ -178,7 +171,7 @@
 						<div class="d-flex justify-content-start col-sm ">
 							Album
 						</div>
-						
+
 						<div class="col-sm d-flex justify-content-around">
 							<a
 								class="fa fa-lg fa-pencil-square btn-danger"
