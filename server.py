@@ -15,6 +15,10 @@ S3_Bucket_Name = 'cds-apple-music'
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'applemusic'
+#remove warning message in the console
+app.config['SQLALCHEMY_DATABASE_URI'] = ''
+#remove warning message in the console
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
