@@ -49,7 +49,7 @@ class EditSongInformationForm(Form):
     new_song_artist = StringField('Artist', [validators.DataRequired(message='Field required')])
     new_song_rating = SelectField('Rating (From 0 to 5)',
                                  choices=[('0', '0'),('1', '1'), ('2', '2'), ('3', '3'),('4', '4'), ('5', '5')],
-                                 default='HI')
+                                 default='unrated')
     # lyrics = StringField('Lyrics', [validators.Length(min=0, max=500)])
     submit = SubmitField('Save')
 
