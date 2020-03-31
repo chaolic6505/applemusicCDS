@@ -72,15 +72,14 @@
 			>
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
-						<div class="modal-header text-center">
-							<h4 class="modal-title w-100 font-weight-bold">Add Song</h4>
-						</div>
-						<div class="modal-body mx-3">
+						<div class="modal-body mx-1 ">
 							{{ dropzone.create('/upload') }} {{ dropzone.load_js() }} {{
-							dropzone.config(max_files=1, timeout=10000, default_message='Drop here!') }}
+							dropzone.config(max_files=1, default_message='Drop Your Audio File Here') }}
+							<div class="modal-footer d-flex justify-content-center">
 							<button id="upload" class="btn  btn-primary">Confirm Upload</button>
+						  </div>
 						</div>
-						<div class="modal-body mx-3">
+						<div class="modal-body mx-1">
 						
 						<form method="POST" action="/save">
 							
@@ -141,7 +140,7 @@
 			</div>
 		</section>
 		<section>
-			<div class="list-container-box" style="margin:3rem;">
+			<div class="list-container-box" style="margin:1rem;">
 				<div class="list-container ">
 					<div class="row ">
 						<div class="d-flex justify-content-start col-sm title-box">
