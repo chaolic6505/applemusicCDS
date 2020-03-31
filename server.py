@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import Form, validators, StringField, PasswordField, SubmitField, SelectField
 from flask_dropzone import Dropzone
 from flask_sqlalchemy import SQLAlchemy
+import requests
 import os
 import boto3
 
@@ -108,9 +109,13 @@ app.config.update(
 
 )
 
+response = requests.get(
+        "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=fb9298e0ee9934acc14d5ffc7193609c&artist=Drake&album=Scorpion&format=json")
+print(response.json())
 
 @app.route('/')
 def index():
+    
     form = SongInformationForm(request.form)
     # db.drop_all()
     # db.create_all()
@@ -215,6 +220,8 @@ def upload():
 # def show_user(username):
 #     user = User.query.filter_by(username=username).first_or_404()
 #     return render_template('show_user.html', user=user)
+
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
