@@ -89,3 +89,33 @@
 .each-row :nth-child(odd) {
 	background-color: black !important;
 } */
+
+
+table {
+
+	/* border-collapse: collapse; */
+	width: 100%;
+  }
+
+  th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+  }
+
+  td {
+	text-align: left;
+	padding: 8px;
+  }
+
+  tr:nth-child(even) {
+	background-color: #dddddd;
+  }
+
+  #action-icon {
+	margin-right: 20px;
+  } */
+
+*{
+	background-color: pink;
+}
