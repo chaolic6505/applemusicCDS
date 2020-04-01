@@ -13,6 +13,9 @@ S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
 LAST_FM_API_key = os.getenv("LAST_FM_API_key")
 
+# Adjust album cover size by increasing 0 from 1 or 2 or 3
+ALBUM_COVER_SIZE = 0
+
 S3_Bucket_Name = 'cds-apple-music'
 
 app = Flask(__name__)
@@ -51,7 +54,7 @@ class SongInformationForm(Form):
         'Title', [validators.DataRequired(message='Field required')])
     new_song_artist = StringField(
         'Artist', [validators.DataRequired(message='Field required')])
-    new_song_album = StringField('Album', default='Single')
+    new_song_album = StringField('Album')
     new_song_genre = StringField('Genre')
     new_song_lyric = StringField('Lyric')
     new_song_rating = SelectField('Rating (From 0 to 5)',
@@ -122,9 +125,10 @@ def index():
     response2 = requests.get(
         f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Ed Sheeran&album=I don't care&format=json")
     Billie = response1.json()
+
     # print(Billie['album']['image'][1]['#text'] == '')
-    Billie_Album_Cover = "Single" if Billie['album']['image'][1][
-        '#text'] == '' else Billie['album']['image'][1]['#text']
+    Billie_Album_Cover = "Single" if Billie['album']['image'][ALBUM_COVER_SIZE][
+        '#text'] == '' else Billie['album']['image'][ALBUM_COVER_SIZE]['#text']
     # print(Billie_Album_Cover)
     Ed = response2.json()
 
@@ -133,11 +137,11 @@ def index():
     db.session.add(Song(year="2020", rating=1, title="No time to die",
                         artist="Billie Eillish", language="English", album=Billie_Album_Cover, genre="pop", duration="3:50"))
     db.session.add(Song(year="2010", rating=4, title="I don't care",
-                        artist="Ed Sheeran ft Justin Bieber", language="English", album=Ed['album']['image'][1]['#text'], genre="pop", duration="3:40"))
+                        artist="Ed Sheeran ft Justin Bieber", language="English", album=Ed['album']['image'][ALBUM_COVER_SIZE]['#text'], genre="pop", duration="3:40"))
     db.session.commit()
-    users = Song.query.all()
-    # print(users[0].title)
-    return render_template('index.html', users=users, form=form)
+    songs = Song.query.all()
+    # print(songs[0].title)
+    return render_template('index.html', songs=songs, form=form)
 
     # return render_template('index.html')
 
@@ -153,6 +157,13 @@ def save_song_info(song_id):
     # print(song_id)
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
+        response = requests.get(
+            f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
+        answer = response.json()
+
+        # Adjust album cover size by increasing 0 to 1, or,2 ,3
+        Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE][
+            '#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
         # print(form.new_song_title.data)
         # print(form.new_song_artist.data)
         # print(form.new_song_rating.data)
@@ -162,14 +173,14 @@ def save_song_info(song_id):
         # print(song.rating)
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
-        song.album = form.new_song_album.data
+        song.album = Album_Cover
         song.genre = form.new_song_genre.data
         song.rating = form.new_song_rating.data
 
         db.session.commit()
-    users = Song.query.all()
-    print(users)
-    return render_template('index.html', users=users, form=form)
+    songs = Song.query.all()
+    print(songs)
+    return render_template('index.html', songs=songs, form=form)
 
 
 @app.route('/deleteSong/<song_id>')
@@ -179,11 +190,9 @@ def delete_song(song_id):
     # print(song_id)
     # print(song.title)
     db.session.commit()
-    users = Song.query.all()
-    return render_template('index.html', users=users, form=form)
+    songs = Song.query.all()
+    return render_template('index.html', songs=songs, form=form)
 
-
-# basedir = os.path.abspath(os.path.dirname(__file__))
 
 dropzone = Dropzone(app)
 s3 = boto3.resource('s3', aws_access_key_id=S3_ACCESS_KEY,
@@ -199,7 +208,8 @@ def save():
         answer = response.json()
 
         # Adjust album cover size by increasing 0 to 1, or,2 ,3
-        Album_Cover = "Single" if answer['album']['image'][1]['#text'] == '' else answer['album']['image'][1]['#text']
+        Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE][
+            '#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
 
         # print(response.json())
         # print(form.new_song_title.data)
@@ -210,8 +220,8 @@ def save():
                             artist=form.new_song_artist.data, language="???", album=Album_Cover, genre=form.new_song_genre.data, duration="???"))
         db.session.commit()
 
-    users = Song.query.all()
-    return render_template('index.html', users=users, form=form)
+    songs = Song.query.all()
+    return render_template('index.html', songs=songs, form=form)
 
 
 @app.route('/upload', methods=['POST', 'GET'])
@@ -220,12 +230,12 @@ def upload():
         f = request.files.get('file')
         for key, f in request.files.items():
             if key.startswith('file'):
-                # f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+                
                 s3.Bucket(S3_Bucket_Name).put_object(
                     Key=f.filename, Body=f.filename)
                 form = SongInformationForm(request.form)
-                users = Song.query.all()
-                return render_template('index.html', users=users, form=form)
+                songs = Song.query.all()
+                return render_template('index.html', songs=songs, form=form)
 
 
 # @app.route('/', methods=['GET', 'POST'])
