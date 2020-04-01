@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 load_dotenv()
 S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
+LAST_FM_API_key=os.getenv("LAST_FM_API_key")
+
 S3_Bucket_Name = 'cds-apple-music'
 
 app = Flask(__name__)
@@ -49,7 +51,7 @@ class SongInformationForm(Form):
         'Title', [validators.DataRequired(message='Field required')])
     new_song_artist = StringField(
         'Artist', [validators.DataRequired(message='Field required')])
-    new_song_album = StringField('Album')
+    new_song_album = StringField('Album',default='Single')
     new_song_genre = StringField('Genre')
     new_song_lyric = StringField('Lyric')
     new_song_rating = SelectField('Rating (From 0 to 5)',
@@ -109,13 +111,10 @@ app.config.update(
 
 )
 
-response = requests.get(
-        "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=fb9298e0ee9934acc14d5ffc7193609c&artist=Drake&album=Scorpion&format=json")
-print(response.json())
 
 @app.route('/')
 def index():
-    
+
     form = SongInformationForm(request.form)
     # db.drop_all()
     # db.create_all()
@@ -127,7 +126,13 @@ def index():
     users = Song.query.all()
     # print(users[0].title)
     return render_template('index.html', users=users, form=form)
+
     # return render_template('index.html')
+response = requests.get(
+    f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Ed Sheeran&album=I don't care&format=json")
+
+answer = response.json()
+print(answer['album']['image'][0]['#text'])
 
 
 @app.route('/editSong/<song_id>', methods=['POST', 'GET'])
