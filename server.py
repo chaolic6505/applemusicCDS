@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
-LAST_FM_API_key=os.getenv("LAST_FM_API_key")
+LAST_FM_API_key = os.getenv("LAST_FM_API_key")
 
 S3_Bucket_Name = 'cds-apple-music'
 
@@ -51,7 +51,7 @@ class SongInformationForm(Form):
         'Title', [validators.DataRequired(message='Field required')])
     new_song_artist = StringField(
         'Artist', [validators.DataRequired(message='Field required')])
-    new_song_album = StringField('Album',default='Single')
+    new_song_album = StringField('Album', default='Single')
     new_song_genre = StringField('Genre')
     new_song_lyric = StringField('Lyric')
     new_song_rating = SelectField('Rating (From 0 to 5)',
@@ -116,23 +116,30 @@ app.config.update(
 def index():
 
     form = SongInformationForm(request.form)
-    # db.drop_all()
-    # db.create_all()
-    # db.session.add(Song(year="2020", rating=1, title="No time to die",
-    #                     artist="Billie Eillish", language="English", album='unknown', genre="pop", duration="3:50"))
-    # db.session.add(Song(year="2010", rating=4, title="I don't care",
-    #                     artist="Ed Sheeran ft Justin Bieber", language="English", album='unknown', genre="pop", duration="3:40"))
+    response1 = requests.get(
+        f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Billie Eillish&album=No time to die&format=json")
+
+    response2 = requests.get(
+        f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Ed Sheeran&album=I don't care&format=json")
+    Billie = response1.json()
+    # print(Billie['album']['image'][1]['#text'] == '')
+    Billie_Album_Cover = "Single" if Billie['album']['image'][1][
+        '#text'] == '' else Billie['album']['image'][1]['#text']
+    # print(Billie_Album_Cover)
+    Ed = response2.json()
+
+    db.drop_all()
+    db.create_all()
+    db.session.add(Song(year="2020", rating=1, title="No time to die",
+                        artist="Billie Eillish", language="English", album=Billie_Album_Cover, genre="pop", duration="3:50"))
+    db.session.add(Song(year="2010", rating=4, title="I don't care",
+                        artist="Ed Sheeran ft Justin Bieber", language="English", album=Ed['album']['image'][1]['#text'], genre="pop", duration="3:40"))
     db.session.commit()
     users = Song.query.all()
     # print(users[0].title)
     return render_template('index.html', users=users, form=form)
 
     # return render_template('index.html')
-response = requests.get(
-    f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Ed Sheeran&album=I don't care&format=json")
-
-answer = response.json()
-print(answer['album']['image'][0]['#text'])
 
 
 @app.route('/editSong/<song_id>', methods=['POST', 'GET'])
@@ -187,12 +194,20 @@ s3 = boto3.resource('s3', aws_access_key_id=S3_ACCESS_KEY,
 def save():
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
+        response = requests.get(
+            f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
+        answer = response.json()
 
-        print(form.new_song_title.data)
-        print(form.new_song_artist.data)
-        print(form.new_song_rating.data)
+        # Adjust album cover size by increasing 0 to 1, or,2 ,3
+        Album_Cover = "Single" if answer['album']['image'][1]['#text'] == '' else answer['album']['image'][1]['#text']
+
+        # print(response.json())
+        # print(form.new_song_title.data)
+        # print(form.new_song_artist.data)
+        # print(form.new_song_rating.data)
+
         db.session.add(Song(year="???", rating=form.new_song_rating.data, title=form.new_song_title.data,
-                            artist=form.new_song_artist.data, language="???", album=form.new_song_album.data, genre=form.new_song_genre.data, duration="???"))
+                            artist=form.new_song_artist.data, language="???", album=Album_Cover, genre=form.new_song_genre.data, duration="???"))
         db.session.commit()
 
     users = Song.query.all()

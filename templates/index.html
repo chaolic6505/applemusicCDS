@@ -73,11 +73,6 @@
 								{{ form.new_song_artist.label }}<br />
 								{{ form.new_song_artist(class="form-control") }}
 							</div>
-
-							<div class="md-form mb-2">
-								{{ form.new_song_album.label }}<br />
-								{{ form.new_song_album(class="form-control") }}
-							</div>
 							<div class="md-form mb-2">
 								{{ form.new_song_genre.label }}<br />
 								{{ form.new_song_genre(class="form-control") }}
@@ -157,7 +152,11 @@
 						<td>{{ user.artist }}</td>
 						<td>{{ user.genre }}</td>
 						<td>{{user.rating}}</td>
-						<td>Album</td>
+						{% if user.album == 'Single' %}
+						<td>{{user.album}}</td>
+						{% else %}
+						<td><img src="{{user.album}}" /></td>
+						{% endif %}
 						<td><span id="action-icon"><a class="fa fa-lg fa-pencil-square btn-danger" aria-hidden="true"
 									href="/editSong/{{user.id }} " role="button "></a></span><span><a
 									class="fa fa-lg fa-trash btn-secondary" aria-hidden="true"
