@@ -145,22 +145,22 @@
 
 					</tr>
 
-					{% for user in users %}
+					{% for song in songs %}
 
 					<tr>
-						<td>{{ user.title }}</td>
-						<td>{{ user.artist }}</td>
-						<td>{{ user.genre }}</td>
-						<td>{{user.rating}}</td>
-						{% if user.album == 'Single' %}
-						<td>{{user.album}}</td>
+						<td>{{ song.title }}</td>
+						<td>{{ song.artist }}</td>
+						<td>{{ song.genre }}</td>
+						<td>{{song.rating}}</td>
+						{% if song.album == 'Single' %}
+						<td>{{song.album}}</td>
 						{% else %}
-						<td><img src="{{user.album}}" /></td>
+						<td><img src="{{song.album}}" /></td>
 						{% endif %}
 						<td><span id="action-icon"><a class="fa fa-lg fa-pencil-square btn-danger" aria-hidden="true"
-									href="/editSong/{{user.id }} " role="button "></a></span><span><a
+									href="/editSong/{{song.id }} " role="button "></a></span><span><a
 									class="fa fa-lg fa-trash btn-secondary" aria-hidden="true"
-									href="/deleteSong/{{user.id }} " role="button "></a></span></td>
+									href="/deleteSong/{{song.id }} " role="button "></a></span></td>
 
 					</tr>
 				
