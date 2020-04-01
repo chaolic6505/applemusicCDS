@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 LAST_FM_API_key = os.getenv("LAST_FM_API_key")
 
 # Adjust album cover size by increasing 0 from 1 or 2 or 3
-ALBUM_COVER_SIZE = 0
+ALBUM_COVER_SIZE = 3
 
 S3_Bucket_Name = 'cds-apple-music'
 
@@ -127,8 +127,7 @@ def index():
     Billie = response1.json()
 
     # print(Billie['album']['image'][1]['#text'] == '')
-    Billie_Album_Cover = "Single" if Billie['album']['image'][ALBUM_COVER_SIZE][
-        '#text'] == '' else Billie['album']['image'][ALBUM_COVER_SIZE]['#text']
+    Billie_Album_Cover = "Single" if Billie['album']['image'][ALBUM_COVER_SIZE]['#text'] == '' else Billie['album']['image'][ALBUM_COVER_SIZE]['#text']
     # print(Billie_Album_Cover)
     Ed = response2.json()
 
@@ -255,17 +254,3 @@ def upload():
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     search = User(request.form)
-#     if request.method == 'GET':
-#         return User
-#
-#     return render_template('index.html', form=search)
-
-#
-# @app.route('/user/<username>')
-# def show_user(username):
-#     user = User.query.filter_by(username=username).first_or_404()
-#     return render_template('show_user.html', user=user)
