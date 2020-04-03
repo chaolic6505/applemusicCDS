@@ -5,7 +5,7 @@
  <img width=200px height=200px src="https://static.billboard.com/files/media/streaming-illustration-v-2019-billboard-1548-1024x677.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">Music Streming Clone</h3>
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> A music management application that allow users to add, play, edit and delete their personal playlist.
     <br> 
 </p>
 
@@ -28,74 +28,71 @@
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
-Write about 1-2 paragraphs describing the purpose of your project.
+Apple music is one of the most popular music streaming platform, however, a web player of Apple Music was never created. That's why we want to create a music streaming web application that works similar to Apple Music.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+  
 
 ### Prerequisites
-What things you need to install the software and how to install them.
+This is the complete list of dependencies to run this program, which are included in reruirement.txt.
+<br>
+You will need to run ```pip install``` to install them.
 
 ```
-Give examples
+appdirs==1.4.3
+autopep8==1.5
+boto3==1.12.31
+botocore==1.15.31
+Click==7.0
+distlib==0.3.0
+docutils==0.15.2
+filelock==3.0.12
+Flask==1.1.1
+Flask-Dropzone==1.5.4
+Flask-SQLAlchemy==2.4.1
+Flask-WTF==0.14.3
+itsdangerous==1.1.0
+Jinja2==2.11.1
+jmespath==0.9.5
+MarkupSafe==1.1.1
+pycodestyle==2.5.0
+python-dateutil==2.8.1
+python-dotenv==0.12.0
+s3transfer==0.3.3
+six==1.14.0
+SQLAlchemy==1.3.13
+urllib3==1.25.8
+virtualenv==20.0.7
+Werkzeug==1.0.0
+WTForms==2.2.1
 ```
 
-### Installing
-A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
-## 🔧 Running the tests <a name = "tests"></a>
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## 🎈 Usage <a name="usage"></a>
 Add notes about how to use the system.
 
-## 🚀 Deployment <a name = "deployment"></a>
-Add additional notes about how to deploy this on a live system.
-
+## 🚀 Start The Program <a name = "deployment"></a>
+To start the program you will need to go to the program directory and open up your terminal and
+1.  Type ```pip install``` and Enter to download all the dependencies
+2.  Type ```source vene/bin/activate``` to get into the virtual environemnt
+3.  Type ``` python3 server.py``` to start the program
 ## ⛏️ Built Using <a name = "built_using"></a>
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [SQLite](https://www.sqlite.org/index.html) - Database
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/) - Server Framework
+- [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/) - Templating
+- [Python](https://www.python.org/) - Server Environment
 
-## ✍️ Authors <a name = "authors"></a>
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+## ✍️ Developers <a name = "authors"></a>
+- Cindy Le
+- Steven Chen
+- Daniel Na
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 - Hat tip to anyone whose code was used
