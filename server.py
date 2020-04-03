@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 LAST_FM_API_key = os.getenv("LAST_FM_API_key")
 
 # Adjust album cover size by increasing 0 from 1 or 2 or 3
-ALBUM_COVER_SIZE = 3
+ALBUM_COVER_SIZE = 0
 
 S3_Bucket_Name = 'cds-apple-music'
 
@@ -108,7 +108,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app.config.update(
     UPLOADED_PATH=os.path.join(basedir, 'upload'),
-    
+    # Flask-Dropzone config:
     DROPZONE_ALLOWED_FILE_TYPE='audio',
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
@@ -150,6 +150,13 @@ def index():
     return render_template('index.html', songs=songs, form=form)
 
     # return render_template('index.html')
+
+
+@app.route('/album')
+def disply_album():
+    form = SongInformationForm(request.form)
+    songs = Song.query.all()
+    return render_template('album.html', form=form, songs=songs)
 
 
 @app.route('/editSong/<song_id>', methods=['POST', 'GET'])
@@ -201,8 +208,9 @@ def delete_song(song_id):
 
 
 dropzone = Dropzone(app)
-s3 = boto3.resource('s3', aws_access_key_id=S3_ACCESS_KEY,
-                    aws_secret_access_key=SECRET_KEY,)
+
+s3 = boto3.client('s3', aws_access_key_id=S3_ACCESS_KEY,
+                  aws_secret_access_key=SECRET_KEY,)
 
 
 @app.route('/save', methods=['POST', 'GET'])
@@ -239,10 +247,11 @@ def upload():
                 f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
                 # client.put_object(Bucket='cds-apple-music',
                 #     Key=f.filename, Body=f.filename, ContentType='audio/mpeg')
-                    
-        client.upload_file(f.filename, S3_Bucket_Name, ExtraArgs={'ContentType' : 'audio/mpeg'})
-                # s3.Object(S3_Bucket_Name, f.filename).upload_fileobj(
-                #     f.filename, ExtraArgs={'ContentType': 'audio/mpeg'})
+
+        s3.upload_file(f'./upload/{f.filename}', S3_Bucket_Name,
+                       f'{f.filename}', ExtraArgs={'ContentType': 'audio/mpeg'})
+        # s3.Object(S3_Bucket_Name, f.filename).upload_fileobj(
+        #     f.filename, ExtraArgs={'ContentType': 'audio/mpeg'})
         form = SongInformationForm(request.form)
         songs = Song.query.all()
         return render_template('index.html', songs=songs, form=form)
@@ -265,3 +274,17 @@ def upload():
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
+
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     search = User(request.form)
+#     if request.method == 'GET':
+#         return User
+#
+#     return render_template('index.html', form=search)
+
+#
+# @app.route('/user/<username>')
+# def show_user(username):
+#     user = User.query.filter_by(username=username).first_or_404()
+#     return render_template('show_user.html', user=user)
