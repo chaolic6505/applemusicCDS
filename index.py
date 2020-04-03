@@ -10,6 +10,18 @@ class Song:
         self.language = language
         self.genre = genre
         self.count = genre
+        self.album = albumclass Song:
+    __tablename__ = 'songs'
+
+    def __init__(self, year, title, artist, language, genre, album, duration=0, count=0, lyrics=None):
+        self.title = title
+        self.year = year
+        self.artist = artist
+        self.duration = duration
+        self.lyrics = lyrics
+        self.language = language
+        self.genre = genre
+        self.count = genre
         self.album = album
 
     def get_artist(self):
