@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 LAST_FM_API_key = os.getenv("LAST_FM_API_key")
 
 # Adjust album cover size by increasing 0 from 1 or 2 or 3
-ALBUM_COVER_SIZE = 0
+ALBUM_COVER_SIZE = 1
 
 S3_Bucket_Name = 'cds-apple-music'
 
@@ -75,6 +75,7 @@ class Song(db.Model):
     language = db.Column(db.String(10))
     genre = db.Column(db.String)
     album = db.Column(db.String)
+    big_album = db.Column(db.String)
     duration = db.Column(db.Integer, nullable=False)
     count_total_played = db.Column(db.Integer)
 
@@ -134,16 +135,20 @@ def index():
     Billie = response1.json()
 
     # print(Billie['album']['image'][1]['#text'] == '')
-    Billie_Album_Cover = "Single" if Billie['album']['image'][ALBUM_COVER_SIZE]['#text'] == '' else Billie['album']['image'][ALBUM_COVER_SIZE]['#text']
+    Billie_Album_Cover = "Single" if Billie['album']['image'][ALBUM_COVER_SIZE][
+        '#text'] == '' else Billie['album']['image'][ALBUM_COVER_SIZE]['#text']
     # print(Billie_Album_Cover)
     Ed = response2.json()
+    ED_Album_Cover = "Single" if Ed['album']['image'][ALBUM_COVER_SIZE][
+        '#text'] == '' else Ed['album']['image'][ALBUM_COVER_SIZE]['#text']
 
     db.drop_all()
     db.create_all()
     db.session.add(Song(year="2020", rating=1, title="No time to die",
                         artist="Billie Eillish", language="English", album=Billie_Album_Cover, genre="pop", duration="3:50"))
     db.session.add(Song(year="2010", rating=4, title="I don't care",
-                        artist="Ed Sheeran ft Justin Bieber", language="English", album=Ed['album']['image'][ALBUM_COVER_SIZE]['#text'], genre="pop", duration="3:40"))
+                        artist="Ed Sheeran ft Justin Bieber", language="English", album=ED_Album_Cover, genre="pop", duration="3:40"))
+
     db.session.commit()
     songs = Song.query.all()
     # print(songs[0].title)
@@ -217,21 +222,23 @@ s3 = boto3.client('s3', aws_access_key_id=S3_ACCESS_KEY,
 def save():
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
-        response = requests.get(
+        get_genre = requests.get(
+            f"http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&track={form.new_song_title.data}&format=json")
+        get_song_info = requests.get(
             f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
-        answer = response.json()
-
-        # Adjust album cover size by increasing 0 to 1, or,2 ,3
-        Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE][
-            '#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
+        
+        GENRE= "Not Specified" if get_genre.json()['track']['toptags']['tag'][1]['name'] == '' else get_genre.json()['track']['toptags']['tag'][1]['name']
+        Album_Cover = "Single" if get_song_info.json()['album']['image'][ALBUM_COVER_SIZE]['#text'] == '' else get_song_info.json()['album']['image'][ALBUM_COVER_SIZE]['#text']
+        print(GENRE)
+        print(Album_Cover)
 
         # print(response.json())
-        # print(form.new_song_title.data)
-        # print(form.new_song_artist.data)
-        # print(form.new_song_rating.data)
+        print(form.new_song_title.data)
+        print(form.new_song_artist.data)
+        print(form.new_song_rating.data)
 
         db.session.add(Song(year="???", rating=form.new_song_rating.data, title=form.new_song_title.data,
-                            artist=form.new_song_artist.data, language="???", album=Album_Cover, genre=form.new_song_genre.data, duration="???"))
+                            artist=form.new_song_artist.data, language="???", album=Album_Cover, genre=GENRE, duration="???"))
         db.session.commit()
 
     songs = Song.query.all()
