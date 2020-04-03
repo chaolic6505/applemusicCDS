@@ -5,7 +5,7 @@
  <img width=200px height=200px src="https://static.billboard.com/files/media/streaming-illustration-v-2019-billboard-1548-1024x677.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Music Streming Clone</h3>
+<h3 align="center">Music Streaming Clone</h3>
 
 <div align="center">
 
@@ -79,7 +79,7 @@ Add notes about how to use the system.
 ## 🚀 Start The Program <a name = "deployment"></a>
 To start the program you will need to go to the program directory and open up your terminal and
 1.  Type ```pip install``` and Enter to download all the dependencies
-2.  Type ```source vene/bin/activate``` to get into the virtual environemnt
+2.  Type ```source venv/bin/activate``` to get into the virtual environemnt
 3.  Type ``` python3 server.py``` to start the program
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [SQLite](https://www.sqlite.org/index.html) - Database
