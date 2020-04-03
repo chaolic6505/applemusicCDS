@@ -32,7 +32,7 @@
 - [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
-Apple music is one of the most popular music streaming platform, however, a web player of Apple Music was never created. That's why we want to create a music streaming web application that works similar to Apple Music.
+Apple music is one of the most popular music streaming platform, however, a web player of Apple Music was never developed. That's why we want to create a music streaming web application that works similar to Apple Music.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
   
