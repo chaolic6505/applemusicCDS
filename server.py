@@ -104,6 +104,8 @@ class Playlist (db.Model):
                                                  backref=db.backref('Playlist', lazy=True))
 
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 app.config.update(
     UPLOADED_PATH=os.path.join(basedir, 'upload'),
     # Flask-Dropzone config:
@@ -200,8 +202,9 @@ def delete_song(song_id):
 
 
 dropzone = Dropzone(app)
-client = boto3.client('s3', aws_access_key_id=S3_ACCESS_KEY,
-                    aws_secret_access_key=SECRET_KEY,)
+
+s3 = boto3.client('s3', aws_access_key_id=S3_ACCESS_KEY,
+                      aws_secret_access_key=SECRET_KEY,)
 
 
 @app.route('/save', methods=['POST', 'GET'])
@@ -238,10 +241,11 @@ def upload():
                 f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
                 # client.put_object(Bucket='cds-apple-music',
                 #     Key=f.filename, Body=f.filename, ContentType='audio/mpeg')
-                    
-        client.upload_file(f.filename, S3_Bucket_Name, ExtraArgs={'ContentType' : 'audio/mpeg'})
-                # s3.Object(S3_Bucket_Name, f.filename).upload_fileobj(
-                #     f.filename, ExtraArgs={'ContentType': 'audio/mpeg'})
+
+        s3.upload_file(f'./upload/{f.filename}', S3_Bucket_Name,
+                           f'{f.filename}', ExtraArgs={'ContentType': 'audio/mpeg'})
+        # s3.Object(S3_Bucket_Name, f.filename).upload_fileobj(
+        #     f.filename, ExtraArgs={'ContentType': 'audio/mpeg'})
         form = SongInformationForm(request.form)
         songs = Song.query.all()
         return render_template('index.html', songs=songs, form=form)
