@@ -74,11 +74,11 @@ WTForms==2.2.1
 
 
 ## 🎈 Usage <a name="usage"></a>
-Add notes about how to use the system.
+you need client id and client secret from aws. apply last.fm api keys for getting album cover, genre
 
 ## 🚀 Start The Program <a name = "deployment"></a>
 To start the program you will need to go to the program directory and open up your terminal and
-1.  Type ```pip install``` and Enter to download all the dependencies
+1.  Type ```pip3 install``` and Enter to download all the dependencies
 2.  Type ```source venv/bin/activate``` to get into the virtual environemnt
 3.  Type ``` python3 server.py``` to start the program
 ## ⛏️ Built Using <a name = "built_using"></a>
