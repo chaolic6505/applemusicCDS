@@ -61,7 +61,7 @@ class SongInformationForm(Form):
                                   choices=[('0', '0'), ('1', '1'), ('2', '2'),
                                            ('3', '3'), ('4', '4'), ('5', '5')],
                                   default='unrated')
-    # lyrics = StringField('Lyrics', [validators.Length(min=0, max=500)])
+    lyrics = StringField('Lyrics', [validators.Length(min=0, max=500)])
     submit = SubmitField('Save')
 
 
@@ -76,6 +76,7 @@ class Song(db.Model):
     genre = db.Column(db.String)
     album = db.Column(db.String)
     big_album = db.Column(db.String)
+    lyrics = db.Column(db.String)
     duration = db.Column(db.Integer, nullable=False)
     count_total_played = db.Column(db.Integer)
 
@@ -166,14 +167,16 @@ def disply_album():
 
 @app.route('/editSong/<song_id>', methods=['POST', 'GET'])
 def edit_song(song_id):
-    form = SongInformationForm()
-    return render_template('modifySongDetails.html', form=form, id=song_id)
+    form = SongInformationForm(request.form)
+    song = Song.query.filter_by(id=song_id).first()
+    return render_template('modifySongDetails.html', form=form, id=song_id,song=song)
 
 
 @app.route('/saveSongInfo/<song_id>', methods=['POST', 'GET'])
 def save_song_info(song_id):
     # print(song_id)
     form = SongInformationForm(request.form)
+    
     if request.method == 'POST' and form.validate():
         response = requests.get(
             f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
