@@ -104,9 +104,11 @@ class Playlist (db.Model):
                                                  backref=db.backref('Playlist', lazy=True))
 
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 app.config.update(
-    # UPLOADED_PATH=os.path.join(basedir, 'upload'),
-    # Flask-Dropzone config:
+    UPLOADED_PATH=os.path.join(basedir, 'upload'),
+    
     DROPZONE_ALLOWED_FILE_TYPE='audio',
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
@@ -116,6 +118,11 @@ app.config.update(
 
 
 @app.route('/')
+def home():
+    return render_template('header.html')
+
+
+@app.route('/songs')
 def index():
 
     form = SongInformationForm(request.form)
@@ -229,12 +236,16 @@ def upload():
         f = request.files.get('file')
         for key, f in request.files.items():
             if key.startswith('file'):
-                
-                s3.Bucket(S3_Bucket_Name).put_object(
-                    Key=f.filename, Body=f.filename)
-                form = SongInformationForm(request.form)
-                songs = Song.query.all()
-                return render_template('index.html', songs=songs, form=form)
+                f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
+                # client.put_object(Bucket='cds-apple-music',
+                #     Key=f.filename, Body=f.filename, ContentType='audio/mpeg')
+                    
+        client.upload_file(f.filename, S3_Bucket_Name, ExtraArgs={'ContentType' : 'audio/mpeg'})
+                # s3.Object(S3_Bucket_Name, f.filename).upload_fileobj(
+                #     f.filename, ExtraArgs={'ContentType': 'audio/mpeg'})
+        form = SongInformationForm(request.form)
+        songs = Song.query.all()
+        return render_template('index.html', songs=songs, form=form)
 
 
 # @app.route('/', methods=['GET', 'POST'])
