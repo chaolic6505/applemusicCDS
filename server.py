@@ -108,7 +108,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app.config.update(
     UPLOADED_PATH=os.path.join(basedir, 'upload'),
-    # Flask-Dropzone config:
+    
     DROPZONE_ALLOWED_FILE_TYPE='audio',
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
