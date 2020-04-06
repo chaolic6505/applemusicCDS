@@ -27,6 +27,7 @@
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
+- [TO-DOs](#todo)
 - [Built Using](#built_using)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
@@ -86,6 +87,13 @@ To start the program you will need to go to the program directory and open up yo
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/) - Server Framework
 - [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/) - Templating
 - [Python](https://www.python.org/) - Server Environment
+
+## TO-DOs <a name = "todo"></a>
+
+There are still some functionalities we are working on
+- Music player are not fully function, such as users are not able to skip songs
+- Users are not able to create a sub-playlist
+- User authentication
 
 ## ✍️ Developers <a name = "authors"></a>
 - Cindy Le
