@@ -39,9 +39,9 @@ Apple music is one of the most popular music streaming platform, however, a web 
   
 
 ### Prerequisites
-This is the complete list of dependencies to run this program, which are included in reruirement.txt.
+This is the complete list of dependencies to run this program, which are included in the requirement.txt.
 <br>
-You will need to run ```pip install``` to install them.
+You will need to run ```pip3 install -r requirements.txt``` to install them.
 
 ```
 appdirs==1.4.3
@@ -75,23 +75,28 @@ WTForms==2.2.1
 
 
 ## 🎈 Usage <a name="usage"></a>
-you need client id and client secret from aws. apply last.fm api keys for getting album cover, genre
+A .env folder will need to have the following keys: 
+* AWS client key and client secret from aws
+* S3 bucket name 
+* Last.fm API key 
 
 ## 🚀 Start The Program <a name = "deployment"></a>
 To start the program you will need to go to the program directory and open up your terminal and
 1.  Type ```pip3 install``` and Enter to download all the dependencies
 2.  Type ```source venv/bin/activate``` to get into the virtual environemnt
 3.  Type ``` python3 server.py``` to start the program
+
 ## ⛏️ Built Using <a name = "built_using"></a>
+- [SQLalchemy](https://www.sqlalchemy.org/) - ORM
 - [SQLite](https://www.sqlite.org/index.html) - Database
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/) - Server Framework
 - [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/) - Templating
-- [Python](https://www.python.org/) - Server Environment
+- [Python3](https://www.python.org/) - Server Environment
 
 ## TO-DOs <a name = "todo"></a>
 
 There are still some functionalities we are working on
-- Music player are not fully function, such as users are not able to skip songs
+- Music player is not fully function, ie. users are not able to skip songs
 - Users are not able to create a sub-playlist
 - User authentication
 
