@@ -114,8 +114,8 @@ app.config.update(
 
 @app.route('/')
 def home():
-    db.drop_all()
-    db.create_all()
+    # db.drop_all()
+    # db.create_all()
     return render_template('landingPage.html')
 
 
@@ -158,7 +158,7 @@ def save_song_info(song_id):
 
         LYRICS_FROM_API = lyricwikia.get_lyrics(f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
 
-        print(LYRICS_FROM_API)
+        #print(LYRICS_FROM_API)
 
         answer = response.json()
 
