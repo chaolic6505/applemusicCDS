@@ -2,8 +2,13 @@
 	margin: auto;
 	padding: auto;
 }
-.save,a {
+.save,
+a {
 	color: white !important;
+}
+.lyrics {
+
+	height: 150px;
 }
 /* a:hover {
 	-webkit-animation: zomg 0.5s infinite;
@@ -90,32 +95,29 @@
 	background-color: black !important;
 } */
 
-
 table {
-
 	/* border-collapse: collapse; */
 	width: 100%;
-  }
+}
 
-  th {
+th {
 	border: 1px solid #dddddd;
 	text-align: left;
 	padding: 8px;
-  }
+}
 
-  td {
+td {
 	text-align: left;
 	padding: 8px;
-  }
+}
 
-  tr:nth-child(even) {
+tr:nth-child(even) {
 	background-color: #dddddd;
-  }
+}
 
-  #action-icon {
+#action-icon {
 	margin-right: 20px;
-  } */
-
-*{
+}
+*/ * {
 	background-color: pink;
 }
