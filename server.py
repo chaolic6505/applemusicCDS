@@ -122,38 +122,6 @@ def home():
 @app.route('/songs')
 def song():
     form = SongInformationForm(request.form)
-    # response1 = requests.get(
-    #     f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Billie Eillish&album=No time to die&format=json")
-
-    # response2 = requests.get(
-    #     f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Ed Sheeran&album=I don't care&format=json")
-
-    # response3 = requests.get(
-    #     f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist=Justin Bieber&album=Baby&format=json")
-
-    # Billie = response1.json()
-
-    # JB = response3.json()
-
-    # Billie_Album_Cover = "Single" if Billie['album']['image'][ALBUM_COVER_SIZE][
-    #     '#text'] == '' else Billie['album']['image'][ALBUM_COVER_SIZE]['#text']
-
-    # Ed = response2.json()
-
-    # get_JB_lyrics = lyricwikia.get_lyrics('Justin Bieber', 'Baby')
-
-    # ED_Album_Cover = "Single" if Ed['album']['image'][ALBUM_COVER_SIZE][
-    #     '#text'] == '' else Ed['album']['image'][ALBUM_COVER_SIZE]['#text']
-
-    # JB_Album_Cover = "Single" if JB['album']['image'][ALBUM_COVER_SIZE][
-    #     '#text'] == '' else JB['album']['image'][ALBUM_COVER_SIZE]['#text']
-
-    # db.session.add(Song(year="2020", rating=1, title="No time to die",
-    #                     artist="Billie Eillish", language="English", album=Billie_Album_Cover, genre="pop", duration="3:50"))
-    # db.session.add(Song(year="2010", rating=4, title="I don't care",
-    #                     artist="Ed Sheeran ft Justin Bieber", language="English", album=ED_Album_Cover, genre="pop", duration="3:40"))
-    # db.session.add(Song(year="", rating=4, title="Baby",
-    #                     artist="Justin Bieber", language="English", album=JB_Album_Cover, genre="pop", duration="3:40", lyrics=get_JB_lyrics))
 
     db.session.commit()
     # if(Song.query.all() != None):
@@ -182,7 +150,6 @@ def edit_song(song_id):
 def save_song_info(song_id):
     # print(song_id)
     form = SongInformationForm(request.form)
-
     if request.method == 'POST' and form.validate():
         response = requests.get(
             f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
@@ -198,13 +165,7 @@ def save_song_info(song_id):
         # Adjust album cover size by increasing 0 to 1, or,2 ,3
         Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE][
             '#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
-        # print(form.new_song_title.data)
-        # print(form.new_song_artist.data)
-        # print(form.new_song_rating.data)
         song = Song.query.filter_by(id=song_id).first()
-        # print(song.title)
-        # print(song.artist)
-        # print(song.rating)
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
         song.album = Album_Cover
@@ -221,8 +182,6 @@ def save_song_info(song_id):
 def delete_song(song_id):
     form = SongInformationForm(request.form)
     Song.query.filter_by(id=song_id).delete()
-    # print(song_id)
-    # print(song.title)
     db.session.commit()
     songs = Song.query.all()
     return render_template('song.html', songs=songs, form=form)
@@ -264,10 +223,3 @@ def save():
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-
-
-#
-# @app.route('/user/<username>')
-# def show_user(username):
-#     user = User.query.filter_by(username=username).first_or_404()
-#     return render_template('show_user.html', user=user)
