@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet " integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN " crossorigin="anonymous " />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <title>Document</title>
-    {{ dropzone.load_css() }} {{ dropzone.style('border: 2px dashed yellow; margin: 10px 0 10px; min-height: 200px;') }}
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     <link rel="icon" href="data:," />
 </head>
 
 <body>
-    <audio class="" controls autoplay preload="auto" autobuffer loop>
-		<source src="{{ url_for('static', filename='') }}" type="audio/ogg" />
-	</audio>
+    <
 
         <div class="navbar ">
 
@@ -29,8 +28,7 @@
             </div>
 
             <div class="signin-button ">
-                <a data-toggle="modal" data-target="#modalContactForm" class="btn btn-primary " href="# " role="button ">Log In</a>
-                <a class="btn btn-primary " href="# " role="button ">Log Out</a>
+                <a class="btn btn-primary " href="/" role="button ">Log Out</a>
             </div>
         </div>
 
@@ -38,10 +36,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body mx-1 ">
-                        {{ dropzone.create('/upload') }} {{ dropzone.load_js() }} {{ dropzone.config(max_files=1, default_message='Drop Your Audio File Here') }}
-                        <div class="modal-footer d-flex justify-content-center"><button id="upload" class="btn  btn-primary">Confirm Upload</button></div>
-                         
-                        <form method="POST" action="/save">
+                      
+                        <form method="POST" action="{{ url_for('save') }}" class="dropzone">
                             <div class="md-form mb-2">{{ form.new_song_title.label }}<br /> {{ form.new_song_title(class="form-control") }}</div>
                             <div class="md-form mb-2">{{ form.new_song_artist.label }}<br /> {{ form.new_song_artist(class="form-control") }}</div>
 
@@ -66,27 +62,6 @@
     <section>
         <div class="list-container-box" style="margin:1rem;">
             <div class="list-container ">
-                <!-- <div class="row ">
-						<div class="d-flex justify-content-start col-sm title-box">
-							<span class="border-bottom-0">Title</span>
-						</div>
-						<div class="d-flex justify-content-start col-sm title-box">
-							Artist
-						</div>
-						<div class="d-flex justify-content-start col-sm title-box">
-							Genre
-						</div>
-						<div class="d-flex justify-content-start col-sm title-box">
-							Rating
-						</div>
-						<div class="d-flex justify-content-start col-sm title-box">
-							Album
-						</div>
-
-						<div class="col-sm ">
-							Actions
-						</div>
-					</div> -->
                 <br />
                 <table>
                     <tr>
@@ -101,21 +76,26 @@
 
                     {% for song in songs %}
 
-                    <tr>
+                    <tr onclick="document.getElementById('{{song.id}}').play()">
+                        <audio id="{{song.id}}">
+                            <source src="{{song.song_url}}" type="audio/mpeg">
+                        </audio>
                         <td>{{ song.title }}</td>
                         <td>{{ song.artist }}</td>
                         <td>{{ song.genre }}</td>
                         <td>{{song.rating}}</td>
                         {% if song.album == 'Single' %}
                         <td>{{song.album}}</td>
+                        {% elif song.album == 'notfound' %}
+                        <td><img src="{{ url_for( 'static', filename='default_album_cover.png') }}" /></td>
                         {% else %}
                         <td><img src="{{song.album}}" /></td>
                         {% endif %}
                         <td><span id="action-icon"><a class="fa fa-lg fa-pencil-square btn-danger" aria-hidden="true"
 									href="/editSong/{{song.id }} " role="button "></a></span><span><a
 									class="fa fa-lg fa-trash btn-secondary" aria-hidden="true"
-									href="/deleteSong/{{song.id }} " role="button "></a></span></td>
-
+                                    href="/deleteSong/{{song.id }} " role="button "></a></span></td>
+    
                     </tr>
 
             </div>
@@ -126,6 +106,7 @@
     </section>
     <footer></footer>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
