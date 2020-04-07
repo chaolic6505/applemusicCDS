@@ -85,7 +85,7 @@
                         {% if song.album == 'Single' %}
                         <td>{{song.album}}</td>
                         {% elif song.album == 'notfound' %}
-                        <td><img src="{{ url_for( 'static', filename='default_album_cover.png') }}" /></td>
+                        <td><img src="{{ url_for( 'static', filename='dc.png') }}" /></td>
                         {% else %}
                         <td><img src="{{song.album}}" /></td>
                         {% endif %}
