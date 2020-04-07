@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}" />
+
+
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!--Bulma-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+    <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+
+    <!-- Dropzone -->
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+
+
+    <title>Pineapple Music Player</title>
+
+
+</head>
+
+
+
+
+<body class=" has-navbar-fixed-top has-navbar-fixed-bottom has-background-black-ter" style="height:100vw;">
+
+    <div class="section transparent  transparent is-spaced ">
+
+        <div class="container  transparent ">
+
+            <div class="hero-head transparent">
+
+                <nav class="navbar is-spaced is-fixed-top has-background-black-ter">
+                    <div class="navbar-brand shadowless">
+                        <a class="navbar-item has-text-warning transparent" href="#">
+                            <img src="../static/media-player-logo.png" style="margin-right:1rem;">
+                            <p class="title has-text-warning has-text-left  major_mono">
+                                <span class="has-text-warning-light">Pineapple Music</span>
+                            </p>
+                        </a>
+
+
+                        <span class="navbar-burger burger is-centered" data-target="navMenu">
+                            <span></span>
+                        <span></span>
+                        <span></span>
+                        </span>
+                    </div>
+
+                    <div id="navMenu" class="navbar-menu transparent">
+
+
+
+                        <div class="navbar-end transparent has-text-right">
+
+                            <div class="navbar-item">
+
+                                <a class="navbar-item is-size-6 has-text-warning  transparent">
+
+                                </a>
+
+                                <a class=" navbar-item  has-text-warning transparent is-hidden-mobile is-hidden-tablet">
+                                    <i class="fas fa-cog"></i>
+                                </a>
+
+
+                                <a class="navbar-item is-size-6 has-text-warning transparent  is-hidden-mobile is-hidden-tablet">
+                                    <i class="far fa-bell"></i>
+                                </a>
+                                <a class="navbar-item  has-text-warning  transparent">
+
+                                </a>
+
+                                <a class="navbar-item is-size-6 has-text-warning  is-hidden-desktop is-hidden-tablet">
+                                    Home
+                                </a>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </nav>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="section is-paddingless has-background-black-ter">
+
+
+
+            <div class="section is-paddingless is-marginless">
+                <div class="columns">
+
+                    <div class="column  is-full has-text-centered">
+
+                        <div class="box transparent">
+
+
+                            <div class="columns has-text-centered  is-multiline ">
+
+
+                                <div class="column is-2 has-background-black-ter is-hidden-mobile ">
+                                    <aside class="menu ">
+
+
+                                        <div class="box transparent has-text-left ">
+
+                                            <hr class="has-background-black-ter">
+                                            <p class="menu-label has-text-warning has-text-weight-bold	muli">
+
+
+                                                <span class="has-text-white has-text-weight-light button modal-button" data-target="modal-id"><i class="fas fa-plus-circle is-warning"></i>Add Song</span>
+
+                                                <!-- related modal with fx class "modal-fx-fadeInScale" -->
+                                                <div id="modal-id" class="modal modal-fx-fadeInScale">
+                                                    <div class="modal-background"></div>
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="{{ url_for('save') }}" class="dropzone">
+                                                            <div class="md-form mb-2">{{ form.new_song_title.label }}<br /> {{ form.new_song_title(class="control") }}</div>
+                                                            <div class="md-form mb-2">{{ form.new_song_artist.label }}<br /> {{ form.new_song_artist(class="control") }}</div>
+
+                                                            <div class="form-group">{{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="control") }}</div>
+                                                            <div class="modal-footer d-flex justify-content-center">{{ form.submit(class="save button is-success ")}}<button class="modal-close is-medium" aria-label="close"></button></div>
+
+                                                        </form>
+
+                                                    </div>
+
+                                                </div>
+
+
+
+
+
+                                            </p>
+
+
+                                            <p class="menu-label has-text-warning has-text-weight-bold	muli">
+                                                LIBRARY
+
+                                            </p>
+
+                                            <p class="menu-label has-text-white">
+                                                <i class="fas fa-music has-text-white"></i>
+                                                <a href="/songs ">Songs </a>
+                                            </p>
+
+                                            <p class="menu-label has-text-white">
+                                                <i class="far fa-user"></i>
+                                                <a href="/artists ">Artists </a>
+
+                                            </p>
+                                            <p class="menu-label has-text-white">
+                                                <i class="fas fa-compact-disc has-text-white"></i> <a href="/album ">Albums </a>
+                                            </p>
+
+                                            <hr class="has-background-black-ter">
+
+                                            <p class="menu-label has-text-warning has-text-weight-bold muli">
+                                                PLAYLISTS
+                                            </p>
+
+                                            <p class="menu-label has-text-white">
+                                                <a href="# ">BB Maker </a>
+                                            </p>
+                                            <p class="muli">
+                                                <a class=" is-info is-bold is-outlined material_shadow_five">
+
+
+                                                    <i class="fas fa-plus-circle is-warning"></i>
+
+                                                    <span class="has-text-warning">Add New Playlist</span>
+                                                </a>
+                                            </p>
+
+                                        </div>
+
+                                    </aside>
+                                </div>
+
+                                <div class="column is-10 has-text-centered">
+
+
+                                    <div class="section is-paddingless">
+
+                                        <div class="notification transparent">
+                                            <p class="title has-text-info has-text-left  major_mono">
+                                                Albums</span>
+                                            </p>
+                                            <div class="columns has-text-centered is-desktop is-multiline">
+                                                {% for song in songs %}
+                                                <div class="column is-4 transparent">
+
+                                                    <div class="box transparent ">
+                                                        <div class="card-image transparent material_shadow_five">
+                                                            <figure class="image transparent is-square is-1by1">
+                                                                {% if song.album == 'Single' %}
+                                                                <img class="material_shadow_five" src=" static/{{ ('default_album.png' ) }} "> {% else %}
+                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> {% endif %}
+
+                                                            </figure>
+                                                            <footer class="card-footer transparent is-overlay ">
+                                                                <div class="card-footer-item ">
+                                                                    <i class="fas fa-play-circle has-text-white fa-5x "></i>
+                                                                </div>
+                                                            </footer>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <nav class="navbar is-fixed-bottom has-background-black-ter ">
+            <div class="level ">
+                <div class="level-item ">
+                    <audio id="player " controls>
+                        <source src="# " type="audio/mp3 " />
+                        <source src="# " type="audio/ogg " />
+                    </audio>
+                </div>
+
+            </div>
+
+
+
+        </nav>
+
+
+
+
+
+
+    </div>
+
+    </div>
+
+
+
+
+
+    <nav class="navbar is-fixed-bottom has-background-black-ter ">
+        <div class="level ">
+            <div class="level-item ">
+                <audio id="player " controls>
+                        <source src="# " type="audio/mp3 " />
+                        <source src="# " type="audio/ogg " />
+                    </audio>
+            </div>
+            <div class="level-item is-hidden-mobile ">
+                <p class="has-text-white ">OOP Project by Steven Chen, Daniel Na and Cindy Le</p>
+
+            </div>
+        </div>
+
+
+
+    </nav>
+
+
+
+
+
+
+</body>
+<!-- <script>
+    document.querySelector('a#open-modal').addEventListener('click', function(event) {
+        event.preventDefault();
+        var modal = document.querySelector('.modal');
+        var html = document.querySelector('html');
+        modal.classList.add('is-active');
+        html.classList.add('is-clipped');
+
+        modal.querySelector('.modal-background').addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.classList.remove('is-active');
+            html.classList.remove('is-clipped');
+        });
+    });
+</script> -->
+
+</html>

@@ -115,7 +115,7 @@ app.config.update(
 @app.route('/')
 def home():
     # db.drop_all()
-    # db.create_all()
+    db.create_all()
     return render_template('landingPage.html')
 
 
@@ -136,7 +136,7 @@ def song():
 def disply_album():
     form = SongInformationForm(request.form)
     songs = Song.query.all()
-    return render_template('album.html', form=form, songs=songs)
+    return render_template('albumlist.html', form=form, songs=songs)
 
 
 @app.route('/editSong/<song_id>', methods=['POST', 'GET'])
@@ -153,14 +153,12 @@ def save_song_info(song_id):
     if request.method == 'POST' and form.validate():
         response = requests.get(
             f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
-        response = track_get_info(
-            LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data)
-
+        response = track_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data,requests, ALBUM_COVER_SIZE)
         LYRICS_FROM_API = lyricwikia.get_lyrics(f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
 
         #print(LYRICS_FROM_API)
 
-        answer = response.json()
+        # answer = response.json()
 
         # Adjust album cover size by increasing 0 to 1, or,2 ,3
         Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE][
