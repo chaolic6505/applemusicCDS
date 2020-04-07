@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='musicplayer-dashboard.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}" />
 
 
     <!--Fontawesome-->
@@ -245,15 +245,23 @@
                                                         <td class="has-text-white has-text-weight-light">{{ song.artist }}</td>
                                                         <td class="has-text-white has-text-weight-light">{{ song.genre }}</td>
                                                         <td class="has-text-white has-text-weight-light">{{song.rating}}</td>
-                                                        {% if song.album == 'Single' %}
-                                                        <td class="has-text-white has-text-weight-light">{{song.album}}</td>
-                                                        {% elif song.album == 'notfound' %}
-                                                        <td><img src="{{ url_for( 'static', filename='default_album_cover.png') }}" /></td>
-                                                        {% else %}
-                                                        <td class="has-text-white has-text-weight-light"><img src="{{song.album}} " /></td>
-                                                        {% endif %}
-                                                        <td class=""><span id="action-icon"><a href="/editSong/{{song.id }} "><i class="fa fa-lg fa-pencil-square has-text-warning" style="margin-right:20%;"></i></a></span>
-                                                            <span><a href="/deleteSong/{{song.id }} "><i class="fa fa-lg fa-trash has-text-warning"></i></a></span>
+                                                        <td class="has-text-white has-text-weight-light">
+                                                        <figure class="image transparent is-square is-1by1">
+                                                                {% if song.album == 'Single' %}
+                                                                <img class="material_shadow_five" src= "../static/dc.png" >
+
+
+                                                                {% elif song.album == 'notfound' %}
+                                                                <img class="material_shadow_five" src= "../static/dc.png" >
+
+                                                                 {% else %}
+                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> 
+                                                                {% endif %}
+
+                                                            </figure>
+                                                        </td>
+                                                        <td class=""><span id="action-icon"><a href="/editSong/{{song.id }}"><i class="fa fa-lg fa-pencil-square has-text-warning" style="margin-right:20%;"></i></a></span>
+                                                            <span><a href="/deleteSong/{{song.id}}"><i class="fa fa-lg fa-trash has-text-warning"></i></a></span>
                                                         </td>
                                                         {% endfor %}
                                                     </tr>

@@ -127,7 +127,7 @@ def song():
     # if(Song.query.all() != None):
     songs = Song.query.all()
     # print(songs[0].title)
-    return render_template('song.html', songs=songs, form=form)
+    return render_template('songlist.html', songs=songs, form=form)
 
     # return render_template('song.html')
 
@@ -175,14 +175,16 @@ def save_song_info(song_id):
     print(songs)
     return render_template('song.html', songs=songs, form=form)
 
-
-@app.route('/deleteSong/<song_id>')
+ 
+@app.route('/deleteSong/<int:song_id>')
 def delete_song(song_id):
+    print(song_id)
     form = SongInformationForm(request.form)
     Song.query.filter_by(id=song_id).delete()
     db.session.commit()
     songs = Song.query.all()
-    return render_template('song.html', songs=songs, form=form)
+
+    return render_template('songlist.html',songs=songs, form=form)
 
 
 dropzone = Dropzone(app)

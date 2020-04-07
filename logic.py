@@ -15,13 +15,14 @@ def track_get_info(LAST_FM_API_key, ARTIST_NAME_COVER_SIZE, TRACK_TITLE, request
 def album_cover_get_info(LAST_FM_API_key, ARTIST_NAME_COVER_SIZE, TRACK_TITLE, requests, ALBUM_COVER_SIZE):
 
     try:
-        result = requests.get(
-            f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={ARTIST_NAME_COVER_SIZE}&album={TRACK_TITLE}&format=json").json()
+        result = requests.get(f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={ARTIST_NAME_COVER_SIZE}&album={TRACK_TITLE}&format=json").json()
         Album_Cover = "Single" if not result['album']['image'][ALBUM_COVER_SIZE]['#text'] else result['album']['image'][ALBUM_COVER_SIZE]['#text']
+        print(result)
         print(Album_Cover)
 
     except KeyError:
+        print(result)
         print('No album cover found')
-        Album_Cover = 'notfound'
+        Album_Cover = '../static/default_album_cover.png'
 
     return Album_Cover
