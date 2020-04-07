@@ -189,8 +189,7 @@ def save_song_info(song_id):
         response = track_get_info(
             LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data)
 
-        LYRICS_FROM_API = lyricwikia.get_lyrics(
-            f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
+        LYRICS_FROM_API = lyricwikia.get_lyrics(f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
 
         print(LYRICS_FROM_API)
 
