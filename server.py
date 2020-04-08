@@ -48,10 +48,7 @@ class SongInformationForm(Form):
     new_song_album = StringField('Album')
     new_song_genre = StringField('Genre')
     new_song_lyric = StringField('Lyric')
-    new_song_rating = SelectField('Rating (From 0 to 5)',
-                                  choices=[('0', '0'), ('1', '1'), ('2', '2'),
-                                           ('3', '3'), ('4', '4'), ('5', '5')],
-                                  default='unrated')
+    new_song_rating = StringField('Rating (From 0 to 5)')
     new_song_lyrics = StringField(
         'Lyrics', [validators.Length(min=0, max=500)])
     submit = SubmitField('Save')
@@ -124,13 +121,12 @@ def song():
     form = SongInformationForm(request.form)
 
     db.session.commit()
-    # if(Song.query.all() != None):
+    
     songs = Song.query.all()
-    # print(songs[0].title)
+    
     return render_template('songlist.html', songs=songs, form=form)
 
-    # return render_template('song.html')
-
+    
 
 @app.route('/album')
 def disply_album():
@@ -139,8 +135,9 @@ def disply_album():
     return render_template('albumlist.html', form=form, songs=songs)
 
 
-@app.route('/editSong/<song_id>', methods=['POST', 'GET'])
+@app.route('/editSong/<int:song_id>', methods=['POST', 'GET'])
 def edit_song(song_id):
+
     form = SongInformationForm(request.form)
     song = Song.query.filter_by(id=song_id).first()
     return render_template('modifySongDetails.html', form=form, id=song_id, song=song)
@@ -158,20 +155,7 @@ def save_song_info(song_id):
                                form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         Lyric = get_song_lyric(form.new_song_artist.data,
                                form.new_song_title.data)
-        # response = requests.get(
-        #     f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
-        # response = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
-        #                           form.new_song_title.data, requests, ALBUM_COVER_SIZE)
-
-        # LYRICS_FROM_API = lyricwikia.get_lyrics(
-        #     f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
-
-        # # print(LYRICS_FROM_API)
-
-        # answer = response.json()
-
-        # # Adjust album cover size by increasing 0 to 1, or,2 ,3
-        # Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE]['#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
+        
 
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
@@ -231,8 +215,8 @@ def save():
                 db.session.commit()
                 # print(f.filename)
 
-                songs = Song.query.all()
-                return render_template('songlist.html', songs=songs, form=form)
+    songs = Song.query.all()
+    return render_template('songlist.html', songs=songs, form=form)
 
 
 

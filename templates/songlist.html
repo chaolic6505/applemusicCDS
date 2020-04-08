@@ -109,42 +109,44 @@
 				</div>
 			</div>
 
-			<div id="modal" class="modal">
-				<div class="modal-background"></div>
-
+			<div id="modal" class="modal modal-fx-newsPaper">
 				<div class="modal-content">
 					<div class="box">
-						<article class="media">
-							<div class="media-left"></div>
-
-							<div class="media-content">
-								<div class="content">
-									<form method="POST" action="{{ url_for('save') }}" class="dropzone">
-										<div class="md-form mb-2">
+						<div class="media-content">
+							<div class="content">
+								<form method="POST" action="{{ url_for('save') }}" class="dropzone">
+									<div class="field">
+										<div class="control">
 											{{ form.new_song_title.label }}<br />
-											{{ form.new_song_title(class="form-control") }}
+											{{ form.new_song_title(class="input is-info is-rounded" ,type="text") }}
 										</div>
-										<div class="md-form mb-2">
+									</div>
+									<div class="field">
+										<div class="control">
 											{{ form.new_song_artist.label }}<br />
-											{{ form.new_song_artist(class="form-control") }}
+											{{ form.new_song_artist(class="input is-info is-rounded" , type="text") }}
 										</div>
+									</div>
 
-										<div class="form-group">
+									<div class="field">
+										<div class="control">
 											{{ form.new_song_rating.label }}<br />
-											{{ form.new_song_rating (class="form-control") }}
+											{{ form.new_song_rating (class="input is-info is-rounded", type="text") }}
 										</div>
-									</form>
+									</div>
+								</form>
+								<div class="field is-grouped-centered">
+									<div class="control is-grouped-centered">
+										{{ form.submit(class="button is-dark is-small ", id="closebtn")}}
+										<button class="button is-dark is-small" id="closebtn2">Close Modal</button>
+									</div>
 								</div>
-
-								<button class="button is-dark is-small" id="closebtn">Save</button>
-								<button class="button is-dark is-small" id="closebtn2">Close Modal</button>
 							</div>
-						</article>
+						</div>
 					</div>
 				</div>
-
-				<button class="modal-close is-large" aria-label="close"></button>
 			</div>
+
 
 			<div class="section is-paddingless has-background-black-ter">
 				<div class="section is-paddingless is-marginless">
@@ -255,11 +257,7 @@
 																	><a href="/deleteSong/{{song.id}}"
 																		><i class="fa fa-lg fa-trash has-text-warning"></i></a
 																></span>
-																<!-- <div class="buttons are-small">
-																	<button class="button" onclick="document.getElementById('{{song.id}}').pause()">
-																		Stop
-																	</button>
-																</div> -->
+
 															</td>
 														</tr>
 													</tbody>
@@ -302,10 +300,8 @@
 		</nav>
 	</body>
 	<script>
-		
-
 		function togglePlay(id) {
-            const myAudio = document.getElementById(`${id}`);
+			const myAudio = document.getElementById(`${id}`);
 			return myAudio.paused ? myAudio.play() : myAudio.pause();
 		}
 		$('#lanuchModal').click(function () {
@@ -318,8 +314,8 @@
 
 		$('#closebtn').click(function () {
 			$('.modal').removeClass('is-active');
-        });
-        $('#closebtn2').click(function () {
+		});
+		$('#closebtn2').click(function () {
 			$('.modal').removeClass('is-active');
 		});
 	</script>
