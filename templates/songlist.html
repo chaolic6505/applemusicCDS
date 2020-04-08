@@ -129,14 +129,19 @@
                
                         <div class="content">
                
-                          
-                          </p>
+                            <form method="POST" action="{{ url_for('save') }}" class="dropzone">
+                                <div class="md-form mb-2">{{ form.new_song_title.label }}<br /> {{ form.new_song_title(class="form-control") }}</div>
+                                <div class="md-form mb-2">{{ form.new_song_artist.label }}<br /> {{ form.new_song_artist(class="form-control") }}</div>
+        
+                                <div class="form-group">{{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="form-control") }}</div>
+                                <div class="modal-footer d-flex justify-content-center">{{ form.submit(class="save btn btn-outline-info btn-primary ")}}<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+                            </form>
                
                         </div>
                
                         
-               
-                        <button class="button is-danger is-small" id="closebtn">Close Modal</button>
+                        <button class="button is-dark is-small" id="closebtn">Save</button>
+                        <button class="button is-dark is-small" id="closebtn">Close Modal</button>
                
                       </div>
                
@@ -161,7 +166,7 @@
 									<div class="column is-2 has-background-black-ter is-hidden-mobile">
 										<aside class="menu">
 											<div class="box transparent has-text-left">
-                                                <button class="button is-dark " id="lanuchModal">Show Modal</button>
+                                                <button class="button is-dark " id="lanuchModal">Add Songs</button>
 												<hr class="has-background-black-ter" />
 												<p class="menu-label has-text-warning has-text-weight-bold muli"></p>
                                                 
