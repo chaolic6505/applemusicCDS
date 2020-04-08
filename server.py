@@ -146,7 +146,7 @@ def edit_song(song_id):
     return render_template('modifySongDetails.html', form=form, id=song_id, song=song)
 
 
-@app.route('/saveSongInfo/<song_id>', methods=['POST', 'GET'])
+@app.route('/saveSongInfo/<int:song_id>', methods=['POST', 'GET'])
 def save_song_info(song_id):
     # print(song_id)
     form = SongInformationForm(request.form)
@@ -173,7 +173,7 @@ def save_song_info(song_id):
         db.session.commit()
     songs = Song.query.all()
     print(songs)
-    return render_template('song.html', songs=songs, form=form)
+    return redirect('/songs')
 
  
 @app.route('/deleteSong/<int:song_id>')
@@ -184,7 +184,7 @@ def delete_song(song_id):
     db.session.commit()
     songs = Song.query.all()
 
-    return render_template('songlist.html',songs=songs, form=form)
+    return redirect('/songs')
 
 
 dropzone = Dropzone(app)
@@ -214,8 +214,8 @@ def save():
                 db.session.commit()
                 # print(f.filename)
 
-    songs = Song.query.all()
-    return redirect('/songs')
+                songs = Song.query.all()
+                return render_template('songlist.html',songs=songs, form=form)
 
 
 

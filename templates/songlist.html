@@ -133,20 +133,11 @@
 											{{ form.new_song_rating.label }}<br />
 											{{ form.new_song_rating (class="form-control") }}
 										</div>
-										<div class="modal-footer d-flex justify-content-center">
-											{{ form.submit(class="save btn btn-outline-info btn-primary ")}}<button
-												type="button"
-												class="btn btn-secondary"
-												data-dismiss="modal"
-											>
-												Close
-											</button>
-										</div>
 									</form>
 								</div>
 
 								<button class="button is-dark is-small" id="closebtn">Save</button>
-								<button class="button is-dark is-small" id="closebtn">Close Modal</button>
+								<button class="button is-dark is-small" id="closebtn2">Close Modal</button>
 							</div>
 						</article>
 					</div>
@@ -326,6 +317,9 @@
 		});
 
 		$('#closebtn').click(function () {
+			$('.modal').removeClass('is-active');
+        });
+        $('#closebtn2').click(function () {
 			$('.modal').removeClass('is-active');
 		});
 	</script>
