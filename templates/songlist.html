@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
+        <link rel="shortcut icon" href="{{ url_for('static', filename='media-player-logo.png') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}" />
 
 		<!--Fontawesome-->
@@ -118,20 +118,20 @@
 									<div class="field">
 										<div class="control">
 											{{ form.new_song_title.label }}<br />
-											{{ form.new_song_title(class="input is-info is-rounded" ,type="text") }}
+											{{ form.new_song_title(class="input is-primary is-rounded" ,type="text") }}
 										</div>
 									</div>
 									<div class="field">
 										<div class="control">
 											{{ form.new_song_artist.label }}<br />
-											{{ form.new_song_artist(class="input is-info is-rounded" , type="text") }}
+											{{ form.new_song_artist(class="input is-primary is-rounded" , type="text") }}
 										</div>
 									</div>
 
 									<div class="field">
 										<div class="control">
 											{{ form.new_song_rating.label }}<br />
-											{{ form.new_song_rating (class="input is-info is-rounded", type="text") }}
+											{{ form.new_song_rating (class="input is-primary is-rounded", type="text") }}
 										</div>
 									</div>
 								</form>
