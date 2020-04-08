@@ -1,0 +1,23 @@
+{
+  "name": "applemusiccds",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"\" rel=\"noopener\">  <img width=200px height=200px src=\"https://static.billboard.com/files/media/streaming-illustration-v-2019-billboard-1548-1024x677.jpg\" alt=\"Project logo\"></a> </p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaolic6505/applemusicCDS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaolic6505/applemusicCDS/issues"
+  },
+  "homepage": "https://github.com/chaolic6505/applemusicCDS#readme",
+  "dependencies": {
+    "bulma": "^0.8.1",
+    "bulma-modal-fx": "^1.1.1"
+  }
+}

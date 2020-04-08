@@ -114,7 +114,7 @@ app.config.update(
 
 @app.route('/')
 def home():
-    # db.drop_all()
+
     db.create_all()
     return render_template('landingPage.html')
 
