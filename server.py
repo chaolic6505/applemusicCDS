@@ -3,11 +3,11 @@ from flask_wtf import FlaskForm
 from wtforms import Form, validators, StringField, PasswordField, SubmitField, SelectField
 from flask_dropzone import Dropzone
 from flask_sqlalchemy import SQLAlchemy
-from logic import track_get_info, album_cover_get_info
+from logic import track_get_info, album_cover_get_info, get_song_lyric
 import requests
 import os
 import boto3
-import lyricwikia
+
 
 
 from dotenv import load_dotenv
@@ -151,31 +151,42 @@ def save_song_info(song_id):
     # print(song_id)
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
-        response = requests.get(
-            f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
-        response = track_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data,requests, ALBUM_COVER_SIZE)
-        LYRICS_FROM_API = lyricwikia.get_lyrics(f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
+        Album_Cover = album_cover_get_info(
+            LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
 
-        #print(LYRICS_FROM_API)
+        GENRE = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
+                               form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        Lyric = get_song_lyric(form.new_song_artist.data,
+                               form.new_song_title.data)
+        # response = requests.get(
+        #     f"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={LAST_FM_API_key}&artist={form.new_song_artist.data}&album={form.new_song_title.data}&format=json")
+        # response = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
+        #                           form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+
+        # LYRICS_FROM_API = lyricwikia.get_lyrics(
+        #     f'{form.new_song_artist.data}', f'{form.new_song_title.data}')
+
+        # # print(LYRICS_FROM_API)
 
         # answer = response.json()
 
-        # Adjust album cover size by increasing 0 to 1, or,2 ,3
-        Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE][
-            '#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
+        # # Adjust album cover size by increasing 0 to 1, or,2 ,3
+        # Album_Cover = "Single" if answer['album']['image'][ALBUM_COVER_SIZE]['#text'] == '' else answer['album']['image'][ALBUM_COVER_SIZE]['#text']
+
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
         song.album = Album_Cover
-        song.genre = form.new_song_genre.data
+        song.genre = GENRE
         song.rating = form.new_song_rating.data
+        song.lyrics = Lyric
 
         db.session.commit()
     songs = Song.query.all()
     print(songs)
     return redirect('/songs')
 
- 
+
 @app.route('/deleteSong/<int:song_id>')
 def delete_song(song_id):
     print(song_id)
@@ -198,10 +209,15 @@ S3_Bucket_Name = 'cds-apple-music'
 def save():
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
-       
-        Album_Cover = album_cover_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
 
-        GENRE = track_get_info(LAST_FM_API_key, form.new_song_artist.data,form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        Album_Cover = album_cover_get_info(
+            LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+
+        GENRE = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
+                               form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        Lyric = get_song_lyric(form.new_song_artist.data,
+                               form.new_song_title.data)
+        print(Lyric)
         f = request.files.get('file')
         for key, f in request.files.items():
             if key.startswith('file'):
@@ -210,13 +226,13 @@ def save():
                                f'{f.filename}', ExtraArgs={'ContentType': 'audio/mpeg'})
                 url = f"https://cds-apple-music.s3-us-west-2.amazonaws.com/{f.filename}"
                 print(url)
-                db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,artist=form.new_song_artist.data, album=Album_Cover, genre=GENRE, song_url=url))
+                db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,
+                                    artist=form.new_song_artist.data, album=Album_Cover, genre=GENRE, song_url=url, lyrics=Lyric))
                 db.session.commit()
                 # print(f.filename)
 
                 songs = Song.query.all()
-                return render_template('songlist.html',songs=songs, form=form)
-
+                return render_template('songlist.html', songs=songs, form=form)
 
 
 
