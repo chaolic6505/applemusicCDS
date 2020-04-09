@@ -115,7 +115,7 @@ app.config.update(
 
 @app.route('/')
 def home():
-    db.drop_all()
+    
     db.create_all()
     return render_template('landingPage.html')
 
@@ -126,6 +126,14 @@ def song():
     db.session.commit()
     songs = Song.query.all()
     return render_template('songlist.html', songs=songs, form=form)
+
+@app.route('/artists')
+def artists():
+    form = SongInformationForm(request.form)
+    db.session.commit()
+    songs = Song.query.all()
+    return render_template('songlist.html', songs=songs, form=form)
+
 
 
 @app.route('/album')
