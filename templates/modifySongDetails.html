@@ -10,10 +10,10 @@
         </div>
         <div class="form-group">
             {{ form.new_song_lyrics.label }}<br />
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" value="{{song.lyrics}}"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" ">{{song.lyrics}}</textarea>
         </div>
         <div class="form-group">
-            {{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="form-control" ) }}
+            {{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="form-control",value = song.rating) }}
         </div>
         <div class="form-group">
             {{ form.submit(class="save btn btn-outline-info btn-primary ") }}

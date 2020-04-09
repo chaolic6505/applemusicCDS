@@ -63,13 +63,8 @@
                     </div>
 
                     <div id="navMenu" class="navbar-menu transparent">
-
-
-
                         <div class="navbar-end transparent has-text-right">
-
                             <div class="navbar-item">
-
                                 <a class="navbar-item is-size-6 has-text-warning  transparent">
 
                                 </a>
@@ -149,13 +144,7 @@
                                                     </div>
 
                                                 </div>
-
-
-
-
-
                                             </p>
-
 
                                             <p class="menu-label has-text-warning has-text-weight-bold	muli">
                                                 LIBRARY
@@ -246,17 +235,11 @@
                                                         <td class="has-text-white has-text-weight-light">{{ song.genre }}</td>
                                                         <td class="has-text-white has-text-weight-light">{{song.rating}}</td>
                                                         <td class="has-text-white has-text-weight-light">
-                                                        <figure class="image transparent is-square is-1by1">
+                                                            <figure class="image transparent is-square is-1by1">
                                                                 {% if song.album == 'Single' %}
-                                                                <img class="material_shadow_five" src= "../static/dc.png" >
-
-
-                                                                {% elif song.album == 'notfound' %}
-                                                                <img class="material_shadow_five" src= "../static/dc.png" >
-
-                                                                 {% else %}
-                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> 
-                                                                {% endif %}
+                                                                <img class="material_shadow_five" src="../static/dc.png"> {% elif song.album == 'notfound' %}
+                                                                <img class="material_shadow_five" src="../static/dc.png"> {% else %}
+                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> {% endif %}
 
                                                             </figure>
                                                         </td>
