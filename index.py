@@ -12,6 +12,18 @@ class Song:
         self.count = genre
         self.album = album
 
+
+    def __init__(self, year, title, artist, language, genre, album, duration=0, count=0, lyrics=None):
+        self.title = title
+        self.year = year
+        self.artist = artist
+        self.duration = duration
+        self.lyrics = lyrics
+        self.language = language
+        self.genre = genre
+        self.count = genre
+        self.album = album
+
     def get_artist(self):
         return self.artist
 
@@ -169,9 +181,6 @@ class Album:
 
     def get_cover_photo(self):
         return self.cover_photo
-
-    # def get_song_position(self, song_postion):
-    #     return self.song_postion
 
     def get_artists_names(self):
         return self.artists.name

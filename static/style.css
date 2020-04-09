@@ -1,10 +1,18 @@
 * {
-	margin: auto;
-	padding: auto;
+    margin: auto;
+    padding: auto;
 }
-.save,a {
-	color: white !important;
+
+.save,
+a {
+    color: white !important;
 }
+
+.lyrics {
+    height: 150px;
+}
+
+
 /* a:hover {
 	-webkit-animation: zomg 0.5s infinite;
 	animation: zomg 0.5s infinite;
@@ -55,67 +63,53 @@
 } */
 
 .function-bar {
-	margin-top: 20px;
-	display: flex;
-	margin-left: 50px;
+    margin-top: 20px;
+    display: flex;
+    margin-left: 50px;
 }
 
 .navbar {
-	margin-left: 100px;
+    margin-left: 100px;
 }
 
 .switch {
-	margin: auto;
+    margin: auto;
 }
 
 .music-info {
-	border: 2px solid rgb(219, 219, 215);
-	border-radius: 5px;
-	padding-left: 300px;
-	padding-right: 300px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+    border: 2px solid rgb(219, 219, 215);
+    border-radius: 5px;
+    padding-left: 300px;
+    padding-right: 300px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .list-container {
-	margin-top: 20px;
-	text-align: center;
+    margin-top: 20px;
+    text-align: center;
 }
-
-/* .each-row :nth-child(even) {
-	background-color: #dcdcdc !important;
-}
-
-.each-row :nth-child(odd) {
-	background-color: black !important;
-} */
-
 
 table {
+    /* border-collapse: collapse; */
+    width: 100%;
+}
 
-	/* border-collapse: collapse; */
-	width: 100%;
-  }
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
 
-  th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-  }
+td {
+    text-align: left;
+    padding: 8px;
+}
 
-  td {
-	text-align: left;
-	padding: 8px;
-  }
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
 
-  tr:nth-child(even) {
-	background-color: #dddddd;
-  }
-
-  #action-icon {
-	margin-right: 20px;
-  } */
-
-*{
-	background-color: pink;
+#action-icon {
+    margin-right: 20px;
 }

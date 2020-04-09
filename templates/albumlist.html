@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'head.html' %}
+</head>
+
+<body class=" has-navbar-fixed-top has-navbar-fixed-bottom has-background-black-ter" style="height: 100vw;">
+    <div class="section transparent  transparent is-spaced ">
+        {% include 'navbar.html' %} {% include 'addSong.html' %}
+        <div class="section is-paddingless has-background-black-ter">
+            <div class="section is-paddingless is-marginless">
+                <div class="columns">
+                    <div class="column is-full has-text-centered">
+                        <div class="box transparent">
+                            <div class="columns has-text-centered is-multiline">
+                                <div class="column is-2 has-background-black-ter is-hidden-mobile">
+                                    {% include 'sideNav.html' %}
+                                </div>
+                                <div class="column is-10 has-text-centered">
+                                    <div class="section is-paddingless">
+                                        <div class="notification transparent">
+                                            <p class="thas-text-white has-text-weight-light">
+                                                Albums</span>
+                                            </p>
+                                            <div class="columns has-text-centered is-desktop is-multiline">
+                                                {% for song in songs %}
+                                                <div class="column is-4 transparent">
+                                                    <div class="box transparent ">
+                                                        <div class="card-image transparent material_shadow_five">
+                                                            <figure class="image transparent is-square is-1by1">
+                                                                {% if song.album == 'Single' %}
+                                                                <img class="material_shadow_five" src=" static/{{ ('default_album_cover.png' ) }} "> {% else %}
+                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> {% endif %}
+
+                                                            </figure>
+                                                            <footer class="card-footer transparent is-overlay ">
+                                                                <div class="card-footer-item ">
+                                                                    <i class="fas fa-play-circle has-text-white fa-5x "></i>
+                                                                </div>
+                                                            </footer>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+
+</body>
+<script>
+    function togglePlay(id) {
+        const myAudio = document.getElementById(`${id}`);
+        return myAudio.paused ? myAudio.play() : myAudio.pause();
+    }
+    $('#launchModal').click(function() {
+        $('.modal').addClass('is-active');
+    });
+
+    $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+    });
+
+    $('#closebtn').click(function() {
+        $('.modal').removeClass('is-active')
+        window.location.reload();
+    });
+    $('#closebtn2').click(function() {
+        $('.modal').removeClass('is-active')
+        window.location.reload();
+    });
+</script>
+
+</html>
