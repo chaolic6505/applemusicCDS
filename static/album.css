@@ -58,10 +58,6 @@ img::before {
     background: transparent;
 }
 
-.is-hoverable {
-    color: yellow;
-}
-
 img {
     border-radius: 5px;
 }
