@@ -24,14 +24,14 @@
                                                 Albums</span>
                                             </p>
                                             <div class="columns has-text-centered is-desktop is-multiline">
-                                                {% for song in songs %}
+                                                {% for album in albums %}
                                                 <div class="column is-4 transparent">
                                                     <div class="box transparent ">
                                                         <div class="card-image transparent material_shadow_five">
                                                             <figure class="image transparent is-square is-1by1">
-                                                                {% if song.album == 'Single' %}
+                                                                {% if album.album_cover_url == 'Single' %}
                                                                 <img class="material_shadow_five" src=" static/{{ ('default_album_cover.png' ) }} "> {% else %}
-                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> {% endif %}
+                                                                <img class="material_shadow_five " src="{{album.album_cover_url}} " alt="Image "> {% endif %}
 
                                                             </figure>
                                                             <footer class="card-footer transparent is-overlay ">
