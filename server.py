@@ -8,7 +8,6 @@ import requests
 import os
 import boto3
 
-
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -17,15 +16,11 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 LAST_FM_API_key = os.getenv("LAST_FM_API_key")
 
 # Adjust album cover size by increasing 0 from 1 or 2 or 3
-ALBUM_COVER_SIZE = 0
-
+ALBUM_COVER_SIZE = 3
 
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = 'applemusic'
-# remove warning message in the console
 app.config['SQLALCHEMY_DATABASE_URI'] = ''
-# remove warning message in the console
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -38,8 +33,6 @@ song_playlist_relationship = db.Table('song_playlist_relationship',
                                       db.Column('artist_id', db.Integer, db.ForeignKey(
                                           'artist.id'), primary_key=True)
                                       )
-
-
 
 class SongInformationForm(Form):
     new_song_title = StringField(
@@ -57,6 +50,7 @@ class SongInformationForm(Form):
 
 class Song(db.Model):
     _tablename__ = 'songs'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     year = db.Column(db.Integer)
     rating = db.Column(db.Integer)
@@ -68,11 +62,8 @@ class Song(db.Model):
     lyrics = db.Column(db.String)
     duration = db.Column(db.Integer)
     song_url = db.Column(db.String)
-
     album_id = db.Column(db.Integer, db.ForeignKey("album.id"))
-    
     artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
-
     song_playlist_relationship = db.relationship('Artist', secondary=song_playlist_relationship, lazy='subquery',
                                                  backref=db.backref('Song', lazy=True))
 
@@ -90,6 +81,7 @@ class Album(db.Model):
 
 class Artist(db.Model):
     _tablename__ = 'artists'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     country = db.Column(db.String, nullable=False)
@@ -99,20 +91,18 @@ class Artist(db.Model):
 
 class Playlist (db.Model):
     _tablename__ = 'playlist'
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     playlist_name = db.Column(db.String, nullable=False)
     song_in_playlist = db.Column(db.String, nullable=False)
-
     song_id = db.Column(db.Integer, db.ForeignKey("song.id"))
     song_playlist_relationship = db.relationship('Song', secondary=song_playlist_relationship, lazy='subquery',
                                                  backref=db.backref('Playlist', lazy=True))
-
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app.config.update(
     UPLOADED_PATH=os.path.join(basedir, 'upload'),
-    # Flask-Dropzone config:
     DROPZONE_ALLOWED_FILE_TYPE='audio',
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
@@ -145,16 +135,15 @@ def edit_song(song_id):
 
 @app.route('/saveSongInfo/<int:song_id>', methods=['POST', 'GET'])
 def save_song_info(song_id):
-    # print(song_id)
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
-        Album_Cover = album_cover_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        album_Cover = album_cover_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         genre = track_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         lyric = get_song_lyric(form.new_song_artist.data, form.new_song_title.data)
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
-        song.album = Album_Cover
+        song.album = album_Cover
         song.genre = genre
         song.rating = form.new_song_rating.data
         song.lyrics = lyric
@@ -162,7 +151,6 @@ def save_song_info(song_id):
     songs = Song.query.all()
     print(songs)
     return redirect('/songs')
-
  
 @app.route('/deleteSong/<int:song_id>')
 def delete_song(song_id):
@@ -201,21 +189,6 @@ def save():
     songs = Song.query.all()
     return redirect('/songs')
 
-
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     search = User(request.form)
-#     if request.method == 'GET':
-#         return User
-#
-#     return render_template('index.html', form=search)
-
-#
-# @app.route('/user/<username>')
-# def show_user(username):
-#     user = User.query.filter_by(username=username).first_or_404()
-#     return render_template('show_user.html', user=user)
