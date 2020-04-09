@@ -1,0 +1,45 @@
+<div id="modal" class="modal modal-fx-newsPaper">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <div class="modal-content">
+
+            <section class="modal-card-body has-background-black-ter">
+                <h1 class="title has-text-white has-text-centered">Add Song</h1>
+                <form method="POST" action="/save" class="dropzone has-background-black-ter">
+                    <div class="field">
+                        <div class="control">
+                            <label class="has-text-white">Title</label><br /> {{ form.new_song_title(class="input is-primary is-rounded form-control" , type="text") }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <label class="has-text-white">Artist</label><br /> {{ form.new_song_artist(class="input is-primary is-rounded form-control" , type="text") }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <label class="has-text-white">Rating (0-5)</label><br /> {{ form.new_song_rating (class="input is-primary is-rounded form-control", type="text") }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <h1 class=" has-text-white has-text-centered">Click anywhere to add a song!</h1>
+                        </div>
+                    </div>
+                    <div class=" has-background-white">
+
+                        {{ dropzone.style('background: white') }} {{ dropzone.create('save') }} {{ dropzone.load_js() }} {{ dropzone.config() }}
+
+                    </div>
+
+                    <div class="buttons is-centered">
+                        {{ form.submit(class="save button is-warning" , id="closebtn" )}}
+                        <button class="button is-dark" id="closebtn2">Close</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
