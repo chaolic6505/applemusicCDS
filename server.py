@@ -169,7 +169,6 @@ def save_song_info(song_id):
         song.lyrics = lyric
         db.session.commit()
     songs = Song.query.all()
-    print(songs)
     return redirect('/songs')
 
 
