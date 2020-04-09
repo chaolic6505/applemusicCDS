@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'head.html' %}
+</head>
+
+<body class="has-navbar-fixed-top has-navbar-fixed-bottom has-background-black-ter" style="height: 100vw;">
+    <div class="section transparent transparent is-spaced">
+        {% include 'navbar.html' %} {% include 'addSong.html' %}
+
+        <div class="section is-paddingless has-background-black-ter">
+            <div class="section is-paddingless is-marginless">
+                <div class="columns">
+                    <div class="column is-full has-text-centered">
+                        <div class="box transparent">
+                            <div class="columns has-text-centered is-multiline">
+                                <div class="column is-2 has-background-black-ter is-hidden-mobile">
+                                    {% include 'sideNav.html' %}
+                                </div>
+                                <div class="column is-10 has-text-centered">
+                                    <div class="section is-paddingless">
+                                        <div class="notification transparent">
+                                            <p class="title has-text-warning has-text-left major_mono">
+                                                <span class="has-text-white has-text-weight-light">Library</span>
+                                            </p>
+
+                                            <table class="table is-fullwidth transparent is-hoverable ">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="has-text-white">Title</th>
+                                                        <th class="has-text-white">Artist</th>
+                                                        <th class="has-text-white">Genre</th>
+                                                        <th class="has-text-white">Rating</th>
+                                                        <th class="has-text-white">Album</th>
+                                                        <th class="has-text-white">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                {% for song in songs %}
+                                                <tbody>
+                                                    <tr style="border-bottom: 0.25rem white solid;" onclick="togglePlay('{{song.id}}')">
+                                                        <audio id="{{song.id}}">
+																<source src="{{song.song_url}}" type="audio/mpeg" />
+															</audio>
+
+                                                        <td class="has-text-grey-light has-text-weight-light" style="border-bottom: 0.5rem;">
+                                                            {{ song.title }}
+                                                        </td>
+                                                        <td class="has-text-grey-light has-text-weight-light">{{ song.artist }}</td>
+                                                        <td class="has-text-grey-light has-text-weight-light">{{ song.genre }}</td>
+                                                        <td class="has-text-grey-light has-text-weight-light">{{song.rating}}</td>
+                                                        <td class="has-text-grey-light has-text-weight-light">
+                                                            <figure class=" transparent is-square" style="width:10%;">
+                                                                {% if song.album == 'Single' %}
+                                                                <img class="material_shadow_five" src="../static/dc.png" /> {% elif song.album == 'notfound' %}
+                                                                <img class="material_shadow_five" src="../static/dc.png" /> {% else %}
+                                                                <img class="material_shadow_five" src="{{song.album}} " alt="Image " /> {% endif %}
+                                                            </figure>
+                                                        </td>
+                                                        <td>
+                                                            <span id="action-icon"><a href="/editSong/{{song.id }}"
+																		><i
+																			class="fa fa-lg fa-pencil-square has-text-warning"
+																			style="margin-right: 20%;"
+																		></i></a
+																></span>
+                                                            <span><a href="/deleteSong/{{song.id}}"
+																		><i class="fa fa-lg fa-trash has-text-warning"></i></a
+																></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+<script>
+    function togglePlay(id) {
+        const myAudio = document.getElementById(`${id}`);
+        return myAudio.paused ? myAudio.play() : myAudio.pause();
+    }
+    $('#launchModal').click(function() {
+        $('.modal').addClass('is-active');
+    });
+
+    $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+    });
+
+    $('#closebtn').click(function() {
+        $('.modal').removeClass('is-active')
+        window.location.reload();
+    });
+    $('#closebtn2').click(function() {
+        $('.modal').removeClass('is-active')
+        window.location.reload();
+    });
+</script>
+
+</html>
