@@ -182,9 +182,6 @@ class Album:
     def get_cover_photo(self):
         return self.cover_photo
 
-    # def get_song_position(self, song_postion):
-    #     return self.song_postion
-
     def get_artists_names(self):
         return self.artists.name
 

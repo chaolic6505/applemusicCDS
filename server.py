@@ -117,16 +117,12 @@ app.config.update(
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
     DROPZONE_UPLOAD_ON_CLICK=False,
-
-
 )
-
 
 @app.route('/')
 def home():
     db.create_all()
     return render_template('landingPage.html')
-
 
 @app.route('/songs')
 def song():
@@ -135,42 +131,33 @@ def song():
     songs = Song.query.all()
     return render_template('songlist.html', songs=songs, form=form)
 
-
 @app.route('/album')
 def disply_album():
     form = SongInformationForm(request.form)
     songs = Song.query.all()
     return render_template('albumlist.html', form=form, songs=songs)
 
-
 @app.route('/editSong/<int:song_id>', methods=['POST', 'GET'])
 def edit_song(song_id):
-
     form = SongInformationForm(request.form)
     song = Song.query.filter_by(id=song_id).first()
     return render_template('modifySongDetails.html', form=form, id=song_id, song=song)
-
 
 @app.route('/saveSongInfo/<int:song_id>', methods=['POST', 'GET'])
 def save_song_info(song_id):
     # print(song_id)
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
-        Album_Cover = album_cover_get_info(
-            LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
-
-        GENRE = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
-                               form.new_song_title.data, requests, ALBUM_COVER_SIZE)
-        Lyric = get_song_lyric(form.new_song_artist.data,
-                               form.new_song_title.data)
+        Album_Cover = album_cover_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        genre = track_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        lyric = get_song_lyric(form.new_song_artist.data, form.new_song_title.data)
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
         song.album = Album_Cover
-        song.genre = GENRE
+        song.genre = genre
         song.rating = form.new_song_rating.data
-        song.lyrics = Lyric
-
+        song.lyrics = lyric
         db.session.commit()
     songs = Song.query.all()
     print(songs)
@@ -186,27 +173,20 @@ def delete_song(song_id):
     songs = Song.query.all()
     return redirect('/songs')
 
-
 dropzone = Dropzone(app)
-
-s3 = boto3.client('s3', aws_access_key_id=S3_ACCESS_KEY,
-                  aws_secret_access_key=SECRET_KEY,)
+s3 = boto3.client('s3', aws_access_key_id=S3_ACCESS_KEY, aws_secret_access_key=SECRET_KEY,)
 S3_Bucket_Name = 'cds-apple-music'
-
 
 @app.route('/save', methods=['POST', 'GET'])
 def save():
     form = SongInformationForm(request.form)
     if request.method == 'POST' and form.validate():
-
-        Album_Cover = album_cover_get_info(
-            LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
-
-        GENRE = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
+        Album_Cover = album_cover_get_info(LAST_FM_API_key, form.new_song_artist.data, form.new_song_title.data, requests, ALBUM_COVER_SIZE)
+        song_genre = track_get_info(LAST_FM_API_key, form.new_song_artist.data,
                                form.new_song_title.data, requests, ALBUM_COVER_SIZE)
-        Lyric = get_song_lyric(form.new_song_artist.data,
+        lyric = get_song_lyric(form.new_song_artist.data,
                                form.new_song_title.data)
-        print(Lyric)
+        print(lyric)
         f = request.files.get('file')
         for key, f in request.files.items():
             if key.startswith('file'):
@@ -215,16 +195,11 @@ def save():
                                f'{f.filename}', ExtraArgs={'ContentType': 'audio/mpeg'})
                 url = f"https://cds-apple-music.s3-us-west-2.amazonaws.com/{f.filename}"
                 print(url)
-                db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,
-                                    artist=form.new_song_artist.data, album=Album_Cover, genre=GENRE, song_url=url, lyrics=Lyric))
+                db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data, artist=form.new_song_artist.data, album=Album_Cover, genre=song_genre, song_url=url, lyrics=lyric))
                 db.session.add(Album(cover_photo=Album_Cover))
-
                 db.session.commit()
-                # print(f.filename)
-
     songs = Song.query.all()
     return redirect('/songs')
-
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"

@@ -13,8 +13,6 @@
 </head>
 
 <body>
-
-
     <audio controls>
 		<source src='https://cds-apple-music.s3-us-west-2.amazonaws.com/test3.mp3' type="audio/mpeg">
 	</audio>
@@ -48,9 +46,7 @@
                         </div>
                     </div>
                     <div class="modal-body mx-1">
-
                         <form method="POST" action="/save">
-
                             <div class="md-form mb-2">
                                 {{ form.new_song_title.label }}<br /> {{ form.new_song_title(class="form-control") }}
                                 <p>Video courtesy of <a href="https://www.bigbuckbunny.org/" target="_blank">Big Buck Bunny</a>.</p>
@@ -66,9 +62,7 @@
                                 {{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="form-control") }}
                             </div>
                     </div>
-
                     <div class="modal-footer d-flex justify-content-center">
-
                         {{ form.submit(class="save btn btn-outline-info btn-primary ")}}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
 							Close
@@ -92,18 +86,12 @@
     <section>
         <div class="list-container-box" style="margin:1rem;">
             <div class="list-container ">
-
                 <br />
                 <table>
                     <tr>
-
                         <th>Albums</th>
-
-
                     </tr>
-
                     {% for song in songs %}
-
                     <tr>
                         {% if song.album == 'Single' %}
                         <td>{{song.album}}</td>
@@ -114,15 +102,11 @@
 									href="/editSong/{{song.id }} " role="button "></a></span><span><a
 									class="fa fa-lg fa-trash btn-secondary" aria-hidden="true"
 									href="/deleteSong/{{song.id }} " role="button "></a></span></td>
-
                     </tr>
                     {% endfor %}
                 </table>
             </div>
-
         </div>
-
-
     </section>
     <footer></footer>
 </body>
