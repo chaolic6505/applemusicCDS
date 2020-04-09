@@ -40,6 +40,7 @@ song_playlist_relationship = db.Table('song_playlist_relationship',
                                       )
 
 
+
 class SongInformationForm(Form):
     new_song_title = StringField(
         'Title', [validators.DataRequired(message='Field required')])
@@ -67,10 +68,24 @@ class Song(db.Model):
     lyrics = db.Column(db.String)
     duration = db.Column(db.Integer)
     song_url = db.Column(db.String)
+
+    album_id = db.Column(db.Integer, db.ForeignKey("album.id"))
+    
     artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
 
     song_playlist_relationship = db.relationship('Artist', secondary=song_playlist_relationship, lazy='subquery',
                                                  backref=db.backref('Song', lazy=True))
+
+
+class Album(db.Model):
+    __tablename__ = "album"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    album_name = db.Column(db.String)
+    year = db.Column(db.Integer)
+    cover_photo = db.Column(db.String)
+    artist = db.Column(db.String)
+    songs = db.relationship('Song',backref='owner')
 
 
 class Artist(db.Model):
@@ -102,14 +117,13 @@ app.config.update(
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
     DROPZONE_UPLOAD_ON_CLICK=False,
-    DROPZONE_REDIRECT_VIEW='completed'
+
 
 )
 
 
 @app.route('/')
 def home():
-
     db.create_all()
     return render_template('landingPage.html')
 
@@ -208,16 +222,14 @@ def save():
                 print(url)
                 db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,
                                     artist=form.new_song_artist.data, album=Album_Cover, genre=GENRE, song_url=url, lyrics=Lyric))
+                db.session.add(Album(cover_photo=Album_Cover))
+
                 db.session.commit()
                 # print(f.filename)
 
     songs = Song.query.all()
     return redirect('/songs')
 
-
-@app.route('/completed')
-def completed():
-    return redirect('/songs')
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
