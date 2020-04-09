@@ -1,35 +1,23 @@
 {% extends "header.html" %}{% block content %}
 <div class="container">
-	<h1>Song Details</h1>
-	<form method="POST" action="/saveSongInfo/{{id }}">
-		<div class="form-group">
-			{{ form.new_song_title.label }}<br> {{ form.new_song_title(class="form-control") }}
-		</div>
-		<div class="form-group">
-			{{ form.new_song_artist.label }}<br> {{ form.new_song_artist(class="form-control") }}
-		</div>
-		<div class="form-group">
-			{{ form.new_song_album.label }}<br> {{ form.new_song_album(class="form-control") }}
-		</div>
-		<div class="form-group">
-			{{ form.new_song_genre.label }}<br> {{ form.new_song_genre(class="form-control") }}
-		</div>
-		<div class="form-group">
-			<label for="exampleFormControlInput1">Lyrics</label>
-			<textarea
-				rows="5"
-				class="form-control"
-				id="exampleFormControlInput1"
-				placeholder=""
-			/>
-		</textarea>
-		<div class="form-group">
-			{{ form.new_song_rating.label }}<br> {{ form.new_song_rating (class="form-control") }}
-		</div>
-		<div class="form-group ">
-			{{ form.submit(class="save btn btn-outline-info  btn-primary ") }}
-		</div>
-	</form>
-	
+    <h1>Song Details</h1>
+    <form method="POST" action="/saveSongInfo/{{id }}">
+        <div class="form-group">
+            {{ form.new_song_title.label }}<br /> {{ form.new_song_title(class="form-control", value= song.title) }}
+        </div>
+        <div class="form-group">
+            {{ form.new_song_artist.label }}<br /> {{ form.new_song_artist(class="form-control" , value= song.artist) }}
+        </div>
+        <div class="form-group">
+            {{ form.new_song_lyrics.label }}<br />
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" ">{{song.lyrics}}</textarea>
+        </div>
+        <div class="form-group">
+            {{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="form-control",value = song.rating) }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="save btn btn-outline-info btn-primary ") }}
+        </div>
+    </form>
 </div>
 {% endblock content %}
