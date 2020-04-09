@@ -30,10 +30,10 @@ def album_cover_get_info(LAST_FM_API_key, ARTIST_NAME_COVER_SIZE, TRACK_TITLE, r
         #print(result)
         #print(Album_Cover)
 
-    except IndexError:
+    except KeyError:
         #print(result)
         print('No album cover found')
-        Album_Cover = '../static/default_album_cover.png'
+        Album_Cover = '../static/dc.png'
 
     return Album_Cover
 

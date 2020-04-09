@@ -9,9 +9,9 @@ import os
 import boto3
 
 
-
 from dotenv import load_dotenv
 load_dotenv()
+
 S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
 LAST_FM_API_key = os.getenv("LAST_FM_API_key")
@@ -61,15 +61,12 @@ class Song(db.Model):
     rating = db.Column(db.Integer)
     title = db.Column(db.String, nullable=False)
     artist = db.Column(db.String)
-    language = db.Column(db.String(10))
     genre = db.Column(db.String)
     album = db.Column(db.String)
     big_album = db.Column(db.String)
     lyrics = db.Column(db.String)
     duration = db.Column(db.Integer)
-    count_total_played = db.Column(db.Integer)
     song_url = db.Column(db.String)
-
     artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
 
     song_playlist_relationship = db.relationship('Artist', secondary=song_playlist_relationship, lazy='subquery',
@@ -104,7 +101,8 @@ app.config.update(
     DROPZONE_ALLOWED_FILE_TYPE='audio',
     DROPZONE_MAX_FILE_SIZE=100,
     DROPZONE_MAX_FILES=20,
-    DROPZONE_UPLOAD_ON_CLICK=True
+    DROPZONE_UPLOAD_ON_CLICK=False,
+    DROPZONE_REDIRECT_VIEW='completed'
 
 )
 
@@ -121,12 +119,11 @@ def song():
     form = SongInformationForm(request.form)
 
     db.session.commit()
-    
+
     songs = Song.query.all()
-    
+
     return render_template('songlist.html', songs=songs, form=form)
 
-    
 
 @app.route('/album')
 def disply_album():
@@ -155,7 +152,6 @@ def save_song_info(song_id):
                                form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         Lyric = get_song_lyric(form.new_song_artist.data,
                                form.new_song_title.data)
-        
 
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
@@ -216,8 +212,12 @@ def save():
                 # print(f.filename)
 
     songs = Song.query.all()
-    return render_template('songlist.html', songs=songs, form=form)
+    return redirect('/songs')
 
+
+@app.route('/completed')
+def completed():
+    return redirect('/songs')
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
