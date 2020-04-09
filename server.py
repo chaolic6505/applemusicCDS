@@ -58,12 +58,16 @@ class Song(db.Model):
     lyrics = db.Column(db.String)
     duration = db.Column(db.Integer)
     song_url = db.Column(db.String)
+    album_id = db.Column(db.Integer, db.ForeignKey('albums.id'))
+
    
 
 class Album(db.Model):
     __tablename__ = 'albums'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
+    songs  = db.relationship('Song', backref='albums', lazy='dynamic')
+
    
 
     def __repr__(self):
@@ -199,7 +203,7 @@ def save():
                 print(url)
                 db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,
                                     artist=form.new_song_artist.data, album=Album_Cover, genre=song_genre, song_url=url, lyrics=lyric))
-                db.session.add(Album(cover_photo=Album_Cover))
+               
                 db.session.commit()
     songs = Song.query.all()
     return redirect('/songs')
