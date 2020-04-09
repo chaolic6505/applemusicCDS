@@ -12,7 +12,6 @@ class Song:
         self.count = genre
         self.album = album
 
-
     def __init__(self, year, title, artist, language, genre, album, duration=0, count=0, lyrics=None):
         self.title = title
         self.year = year
@@ -59,6 +58,7 @@ class Album:
         self.album_name = album_name
         self.year = year
         self.cover_photo = cover_photo
+        
         if artist is None:
             self.artists = Artist("Various Artists")
         else:

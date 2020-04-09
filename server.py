@@ -25,14 +25,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-song_playlist_relationship = db.Table('song_playlist_relationship',
-                                      db.Column('song_id', db.Integer, db.ForeignKey(
-                                          'song.id'), primary_key=True),
-                                      db.Column('playlist_id', db.Integer, db.ForeignKey(
-                                          'playlist.id'), primary_key=True),
-                                      db.Column('artist_id', db.Integer, db.ForeignKey(
-                                          'artist.id'), primary_key=True)
-                                      )
+
 
 
 class SongInformationForm(Form):
@@ -49,6 +42,9 @@ class SongInformationForm(Form):
     submit = SubmitField('Save')
 
 
+
+
+
 class Song(db.Model):
     _tablename__ = 'songs'
 
@@ -62,32 +58,26 @@ class Song(db.Model):
     lyrics = db.Column(db.String)
     duration = db.Column(db.Integer)
     song_url = db.Column(db.String)
-    album_id = db.Column(db.Integer, db.ForeignKey("album.id"))
-    artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
-    song_playlist_relationship = db.relationship('Artist', secondary=song_playlist_relationship, lazy='subquery',
-                                                 backref=db.backref('Song', lazy=True))
-
+   
 
 class Album(db.Model):
-    __tablename__ = "album"
+    __tablename__ = 'albums'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+   
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    album_name = db.Column(db.String)
-    year = db.Column(db.Integer)
-    cover_photo = db.Column(db.String)
-    artist = db.Column(db.String)
-    songs = db.relationship('Song', backref='owner')
+    def __repr__(self):
+        return f"Album('{self.name}')"
 
 
 class Artist(db.Model):
-    _tablename__ = 'artists'
+    __tablename__ = 'artists'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
-    country = db.Column(db.String, nullable=False)
-    genre = db.Column(db.Integer, nullable=False)
-    album = db.Column(db.String, nullable=False)
-
+    def __repr__(self):
+        return f"Artist('{self.__name}')"
 
 class Playlist (db.Model):
     _tablename__ = 'playlist'
@@ -96,11 +86,10 @@ class Playlist (db.Model):
     playlist_name = db.Column(db.String, nullable=False)
     song_in_playlist = db.Column(db.String, nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey("song.id"))
-    song_playlist_relationship = db.relationship('Song', secondary=song_playlist_relationship, lazy='subquery',
-                                                 backref=db.backref('Playlist', lazy=True))
+   
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -127,13 +116,13 @@ def song():
     songs = Song.query.all()
     return render_template('songlist.html', songs=songs, form=form)
 
+
 @app.route('/artists')
 def artists():
     form = SongInformationForm(request.form)
     db.session.commit()
     songs = Song.query.all()
     return render_template('songlist.html', songs=songs, form=form)
-
 
 
 @app.route('/album')
