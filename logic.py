@@ -1,4 +1,3 @@
-
 import darklyrics
 import lyricwikia
 
@@ -11,7 +10,7 @@ def track_get_info(LAST_FM_API_key, ARTIST_NAME_COVER_SIZE, TRACK_TITLE, request
         print('genre not found')
     except KeyError:
         genre = "Not Found"
-        # return genre
+    return genre
 
 def album_cover_get_info(LAST_FM_API_key, ARTIST_NAME_COVER_SIZE, TRACK_TITLE, requests, ALBUM_COVER_SIZE):
     try:

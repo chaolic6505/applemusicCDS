@@ -62,31 +62,26 @@ class Song(db.Model):
     lyrics = db.Column(db.String)
     duration = db.Column(db.Integer)
     song_url = db.Column(db.String)
-    album_id = db.Column(db.Integer, db.ForeignKey("album.id"))
-    artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
-    song_playlist_relationship = db.relationship('Artist', secondary=song_playlist_relationship, lazy='subquery',
-                                                 backref=db.backref('Song', lazy=True))
+    album_id = db.Column(db.Integer, db.ForeignKey('albums.id'))
 
 
 class Album(db.Model):
-    __tablename__ = "album"
+    __tablename__ = 'albums'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    album_name = db.Column(db.String)
-    year = db.Column(db.Integer)
-    cover_photo = db.Column(db.String)
-    artist = db.Column(db.String)
-    songs = db.relationship('Song', backref='owner')
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    songs  = db.relationship('Song', backref='albums', lazy='dynamic')
 
 
 class Artist(db.Model):
-    _tablename__ = 'artists'
+    __tablename__ = 'artists'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
-    country = db.Column(db.String, nullable=False)
-    genre = db.Column(db.Integer, nullable=False)
-    album = db.Column(db.String, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+
+
+    def __repr__(self):
+        return f"Album('{self.name}')"
 
 
 class Playlist (db.Model):
@@ -134,7 +129,12 @@ def artists():
     songs = Song.query.all()
     return render_template('songlist.html', songs=songs, form=form)
 
-
+@app.route('/artists')
+def artists():
+    form = SongInformationForm(request.form)
+    db.session.commit()
+    songs = Song.query.all()
+    return render_template('songlist.html', songs=songs, form=form)
 
 @app.route('/album')
 def disply_album():
@@ -207,7 +207,6 @@ def save():
                 url = f"https://cds-apple-music.s3-us-west-2.amazonaws.com/{f.filename}"
                 db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,
                                     artist=form.new_song_artist.data, album=Album_Cover, genre=song_genre, song_url=url, lyrics=lyric))
-                db.session.add(Album(cover_photo=Album_Cover))
                 db.session.commit()
     songs = Song.query.all()
     return redirect('/songs')
