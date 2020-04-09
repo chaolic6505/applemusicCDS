@@ -1,325 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<link
-			rel="shortcut icon"
-			href="{{ url_for('static', filename='media-player-logo.png') }}"
-		/>
-		<link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}" />
 
-		<!--Fontawesome-->
-		<link
-			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
-			integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-			crossorigin="anonymous"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-			integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-			crossorigin="anonymous"
-		/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-		<!--Bulma-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}" />
 
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
-		/>
-		<link
-			href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css"
-			rel="stylesheet"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css"
-		/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script
-			type="text/javascript"
-			src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"
-		></script>
 
-		<!-- Dropzone -->
-		{{ dropzone.load_css() }} {{ dropzone.style('border: 2px solid #0087F7; margin:10%; min-height: 400px;') }}
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-		<title>Pineapple Music Player</title>
-	</head>
+    <!--Bulma-->
 
-	<body
-		class="has-navbar-fixed-top has-navbar-fixed-bottom has-background-black-ter"
-		style="height: 100vw;"
-	>
-		<div class="section transparent transparent is-spaced">
-			<div class="container transparent">
-				<div class="hero-head transparent">
-					<nav class="navbar is-spaced is-fixed-top has-background-black-ter">
-						<div class="navbar-brand shadowless">
-							<a class="navbar-item has-text-warning transparent" href="#">
-								<img src="../static/media-player-logo.png" style="margin-right: 1rem;" />
-								<p class="title has-text-warning has-text-left major_mono">
-									<span class="has-text-warning-light">Pineapple Music</span>
-								</p>
-							</a>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+    <link href="https://unpkg.com/bulma-fluent@0.3.13/css/bulma.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
 
-							<span class="navbar-burger burger is-centered" data-target="navMenu">
-								<span></span>
-								<span></span>
-								<span></span>
-							</span>
-						</div>
+    <!-- Dropzone -->
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+    <link rel="icon" href="data:," />
 
-						<div id="navMenu" class="navbar-menu transparent">
-							<div class="navbar-end transparent has-text-right">
-								<div class="navbar-item">
-									<a class="navbar-item is-size-6 has-text-warning transparent"> </a>
+    <title>Pineapple Music Player</title>
 
-									<a
-										class="navbar-item has-text-warning transparent is-hidden-mobile is-hidden-tablet"
-									>
-										<i class="fas fa-cog"></i>
-									</a>
 
-									<a
-										class="navbar-item is-size-6 has-text-warning transparent is-hidden-mobile is-hidden-tablet"
-									>
-										<i class="far fa-bell"></i>
-									</a>
-									<a class="navbar-item has-text-warning transparent"> </a>
+</head>
 
-									<a
-										class="navbar-item is-size-6 has-text-warning is-hidden-desktop is-hidden-tablet"
-									>
-										Home
-									</a>
-								</div>
-							</div>
-						</div>
-					</nav>
-				</div>
-			</div>
 
-			<div id="modal" class="modal modal-fx-newsPaper">
-				<div class="modal-content">
-					<div class="box">
-						<form method="POST" action="/save" class="dropzone">
-							<div class="field">
-								<div class="control">
-									{{ form.new_song_title.label }}<br />
-									{{ form.new_song_title(class="input is-primary is-rounded form-control"
-									,type="text") }}
-								</div>
-							</div>
-							<div class="field">
-								<div class="control">
-									{{ form.new_song_artist.label }}<br />
-									{{ form.new_song_artist(class="input is-primary is-rounded form-control" ,
-									type="text") }}
-								</div>
-							</div>
 
-							<div class="field">
-								<div class="control">
-									{{ form.new_song_rating.label }}<br />
-									{{ form.new_song_rating (class="input is-primary is-rounded form-control",
-									type="text") }}
-								</div>
-							</div>
-							<div class="field">
-								<div class="control">
-									{{ dropzone.create('save') }} {{ dropzone.load_js() }} {{ dropzone.config() }}
-								</div>
-							</div>
-							<div class="field is-grouped-centered">
-								<div class="control is-grouped-centered">
-									{{ form.submit(class="save button is-dark is-small ", id="closebtn")}}
-									<button class="button is-dark is-small" id="closebtn2">Close Modal</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
 
-			<div class="section is-paddingless has-background-black-ter">
-				<div class="section is-paddingless is-marginless">
-					<div class="columns">
-						<div class="column is-full has-text-centered">
-							<div class="box transparent">
-								<div class="columns has-text-centered is-multiline">
-									<div class="column is-2 has-background-black-ter is-hidden-mobile">
-										<aside class="menu">
-											<div class="box transparent has-text-left">
-												<button class="button is-dark" id="lanuchModal">Add Songs</button>
-												<hr class="has-background-black-ter" />
-												<p class="menu-label has-text-warning has-text-weight-bold muli"></p>
+<body class=" has-navbar-fixed-top has-navbar-fixed-bottom has-background-black-ter" style="height:100vw;">
 
-												<p class="menu-label has-text-warning has-text-weight-bold muli">
-													LIBRARY
-												</p>
+    <div class="section transparent  transparent is-spaced ">
 
-												<p class="menu-label has-text-white">
-													<i class="fas fa-music has-text-white"></i>
-													<a href="/songs ">Songs </a>
-												</p>
+        <div class="container  transparent ">
 
-												<p class="menu-label has-text-white">
-													<i class="far fa-user"></i>
-													<a href="/artists ">Artists </a>
-												</p>
-												<p class="menu-label has-text-white">
-													<i class="fas fa-compact-disc has-text-white"></i> <a href="/album ">Albums </a>
-												</p>
+            <div class="hero-head transparent">
 
-												<hr class="has-background-black-ter" />
+                <nav class="navbar is-spaced is-fixed-top has-background-black-ter">
+                    <div class="navbar-brand shadowless">
+                        <a class="navbar-item has-text-warning transparent" href="#">
+                            <img src="../static/media-player-logo.png" style="margin-right:1rem;">
+                            <p class="title has-text-warning has-text-left  major_mono">
+                                <span class="has-text-warning-light">Pineapple Music</span>
+                            </p>
+                        </a>
 
-												<p class="menu-label has-text-warning has-text-weight-bold muli">
-													PLAYLISTS
-												</p>
 
-												<p class="menu-label has-text-white">
-													<a href="# ">BB Maker </a>
-												</p>
-												<p class="muli">
-													<a class="is-info is-bold is-outlined material_shadow_five">
-														<i class="fas fa-plus-circle is-warning"></i>
+                        <span class="navbar-burger burger is-centered" data-target="navMenu">
+                            <span></span>
+                        <span></span>
+                        <span></span>
+                        </span>
+                    </div>
 
-														<span class="has-text-warning">Add New Playlist</span>
-													</a>
-												</p>
-											</div>
-										</aside>
-									</div>
+                    <div id="navMenu" class="navbar-menu transparent">
+                        <div class="navbar-end transparent has-text-right">
+                            <div class="navbar-item">
+                                <a class="navbar-item is-size-6 has-text-warning  transparent">
 
-									<div class="column is-10 has-text-centered">
-										<div class="section is-paddingless">
-											<div class="notification transparent">
-												<p class="title has-text-warning has-text-left major_mono">
-													<span class="has-text-white has-text-weight-light">Library</span>
-												</p>
+                                </a>
 
-												<table class="table is-fullwidth transparent is-hoverable">
-													<thead>
-														<tr>
-															<th class="has-text-white">Title</th>
-															<th class="has-text-white">Artist</th>
-															<th class="has-text-white">Genre</th>
-															<th class="has-text-white">Rating</th>
-															<th class="has-text-white">Album</th>
-															<th class="has-text-white">Action</th>
-														</tr>
-													</thead>
-													{% for song in songs %}
-													<tbody>
-														<tr
-															style="border-bottom: 0.25rem white solid;"
-															onclick="togglePlay('{{song.id}}')"
-														>
-															<audio id="{{song.id}}">
-																<source src="{{song.song_url}}" type="audio/mpeg" />
-															</audio>
+                                <a class=" navbar-item  has-text-warning transparent is-hidden-mobile is-hidden-tablet">
+                                    <i class="fas fa-cog"></i>
+                                </a>
 
-															<td class="has-text-white has-text-weight-light" style="border-bottom: 0.5rem;">
-																{{ song.title }}
-															</td>
-															<td class="has-text-white has-text-weight-light">{{ song.artist }}</td>
-															<td class="has-text-white has-text-weight-light">{{ song.genre }}</td>
-															<td class="has-text-white has-text-weight-light">{{song.rating}}</td>
-															<td class="has-text-white has-text-weight-light">
-																<figure class="image transparent is-square is-1by1">
-																	{% if song.album == 'Single' %}
-																	<img class="material_shadow_five" src="../static/dc.png" />
 
-																	{% elif song.album == 'notfound' %}
-																	<img class="material_shadow_five" src="../static/dc.png" />
+                                <a class="navbar-item is-size-6 has-text-warning transparent  is-hidden-mobile is-hidden-tablet">
+                                    <i class="far fa-bell"></i>
+                                </a>
+                                <a class="navbar-item  has-text-warning  transparent">
 
-																	{% else %}
-																	<img class="material_shadow_five" src="{{song.album}} " alt="Image " />
-																	{% endif %}
-																</figure>
-															</td>
-															<td class="">
-																<span id="action-icon"
-																	><a href="/editSong/{{song.id }}"
-																		><i
-																			class="fa fa-lg fa-pencil-square has-text-warning"
-																			style="margin-right: 20%;"
-																		></i></a
-																></span>
-																<span
-																	><a href="/deleteSong/{{song.id}}"
-																		><i class="fa fa-lg fa-trash has-text-warning"></i></a
-																></span>
-															</td>
-														</tr>
-													</tbody>
-													{% endfor %}
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                                </a>
 
-				<nav class="navbar is-fixed-bottom has-background-black-ter">
-					<div class="level">
-						<div class="level-item">
-							<audio id="player " controls>
-								<source src="# " type="audio/mp3 " />
-								<source src="# " type="audio/ogg " />
-							</audio>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</div>
+                                <a class="navbar-item is-size-6 has-text-warning  is-hidden-desktop is-hidden-tablet">
+                                    Home
+                                </a>
 
-		<nav class="navbar is-fixed-bottom has-background-black-ter">
-			<div class="level">
-				<div class="level-item">
-					<audio id="player " controls>
-						<source src="# " type="audio/mp3 " />
-						<source src="# " type="audio/ogg " />
-					</audio>
-				</div>
-				<div class="level-item is-hidden-mobile">
-					<p class="has-text-white">OOP Project by Steven Chen, Daniel Na and Cindy Le</p>
-				</div>
-			</div>
-		</nav>
-	</body>
-	<script>
-		function togglePlay(id) {
-			const myAudio = document.getElementById(`${id}`);
-			return myAudio.paused ? myAudio.play() : myAudio.pause();
-		}
-		$('#lanuchModal').click(function () {
-			$('.modal').addClass('is-active');
-		});
 
-		$('.modal-close').click(function () {
-			$('.modal').removeClass('is-active');
-		});
+                            </div>
 
-		$('#closebtn').click(function () {
-            $('.modal').removeClass('is-active')
-            window.location.reload();
-		});
-		$('#closebtn2').click(function () {
-            $('.modal').removeClass('is-active')
-            window.location.reload();
-		});
-	</script>
+                        </div>
+
+
+                    </div>
+
+                </nav>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="section is-paddingless has-background-black-ter">
+
+
+
+            <div class="section is-paddingless is-marginless">
+                <div class="columns">
+
+                    <div class="column  is-full has-text-centered">
+
+                        <div class="box transparent">
+
+
+                            <div class="columns has-text-centered  is-multiline ">
+
+
+                                <div class="column is-2 has-background-black-ter is-hidden-mobile ">
+                                    <aside class="menu ">
+
+
+                                        <div class="box transparent has-text-left ">
+
+                                            <hr class="has-background-black-ter">
+                                            <p class="menu-label has-text-warning has-text-weight-bold	muli">
+
+
+                                                <span class="has-text-white has-text-weight-light button modal-button" data-target="modal-id"><i class="fas fa-plus-circle is-warning"></i>Add Song</span>
+
+                                                <!-- related modal with fx class "modal-fx-fadeInScale" -->
+                                                <div id="modal-id" class="modal modal-fx-fadeInScale">
+                                                    <div class="modal-background"></div>
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="{{ url_for('save') }}" class="dropzone">
+                                                            <div class="md-form mb-2">{{ form.new_song_title.label }}<br /> {{ form.new_song_title(class="control") }}</div>
+                                                            <div class="md-form mb-2">{{ form.new_song_artist.label }}<br /> {{ form.new_song_artist(class="control") }}</div>
+
+                                                            <div class="form-group">{{ form.new_song_rating.label }}<br /> {{ form.new_song_rating (class="control") }}</div>
+                                                            <div class="modal-footer d-flex justify-content-center">{{ form.submit(class="save button is-success ")}}<button class="modal-close is-medium" aria-label="close"></button></div>
+
+                                                        </form>
+
+                                                    </div>
+
+                                                </div>
+                                            </p>
+
+                                            <p class="menu-label has-text-warning has-text-weight-bold	muli">
+                                                LIBRARY
+
+                                            </p>
+
+                                            <p class="menu-label has-text-white">
+                                                <i class="fas fa-music has-text-white"></i>
+                                                <a href="/songs ">Songs </a>
+                                            </p>
+
+                                            <p class="menu-label has-text-white">
+                                                <i class="far fa-user"></i>
+                                                <a href="/artists ">Artists </a>
+
+                                            </p>
+                                            <p class="menu-label has-text-white">
+                                                <i class="fas fa-compact-disc has-text-white"></i> <a href="/album ">Albums </a>
+                                            </p>
+
+                                            <hr class="has-background-black-ter">
+
+                                            <p class="menu-label has-text-warning has-text-weight-bold muli">
+                                                PLAYLISTS
+                                            </p>
+
+                                            <p class="menu-label has-text-white">
+                                                <a href="# ">BB Maker </a>
+                                            </p>
+                                            <p class="muli">
+                                                <a class=" is-info is-bold is-outlined material_shadow_five">
+
+
+                                                    <i class="fas fa-plus-circle is-warning"></i>
+
+                                                    <span class="has-text-warning">Add New Playlist</span>
+                                                </a>
+                                            </p>
+
+
+
+
+
+
+
+                                        </div>
+
+                                    </aside>
+                                </div>
+
+                                <div class="column is-10 has-text-centered">
+
+
+                                    <div class="section is-paddingless">
+
+
+
+
+
+
+                                        <div class="notification transparent">
+                                            <p class="title has-text-warning has-text-left  major_mono">
+                                                <span class="has-text-white has-text-weight-light">Library</span>
+                                            </p>
+
+
+
+                                            <table class="table is-fullwidth transparent is-hoverable">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="has-text-white">Title</th>
+                                                        <th class="has-text-white">Artist</th>
+                                                        <th class="has-text-white">Genre</th>
+                                                        <th class="has-text-white">Rating</th>
+                                                        <th class="has-text-white">Album</th>
+                                                        <th class="has-text-white">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                {% for song in songs %}
+                                                <tbody>
+                                                    <tr style="border-bottom: .25rem white solid;" onclick="document.getElementById('{{song.id}}').play()">
+                                                        <audio id="{{song.id}}">
+                                                            <source src="{{song.song_url}}" type="audio/mpeg">
+                                                        </audio>
+                                                        </td>
+                                                        <td class="has-text-white has-text-weight-light" style="border-bottom: .5rem;">{{ song.title }}</td>
+                                                        <td class="has-text-white has-text-weight-light">{{ song.artist }}</td>
+                                                        <td class="has-text-white has-text-weight-light">{{ song.genre }}</td>
+                                                        <td class="has-text-white has-text-weight-light">{{song.rating}}</td>
+                                                        <td class="has-text-white has-text-weight-light">
+                                                            <figure class="image transparent is-square is-1by1">
+                                                                {% if song.album == 'Single' %}
+                                                                <img class="material_shadow_five" src="../static/dc.png"> {% elif song.album == 'notfound' %}
+                                                                <img class="material_shadow_five" src="../static/dc.png"> {% else %}
+                                                                <img class="material_shadow_five " src="{{song.album}} " alt="Image "> {% endif %}
+
+                                                            </figure>
+                                                        </td>
+                                                        <td class=""><span id="action-icon"><a href="/editSong/{{song.id }}"><i class="fa fa-lg fa-pencil-square has-text-warning" style="margin-right:20%;"></i></a></span>
+                                                            <span><a href="/deleteSong/{{song.id}}"><i class="fa fa-lg fa-trash has-text-warning"></i></a></span>
+                                                        </td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <nav class="navbar is-fixed-bottom has-background-black-ter ">
+                <div class="level ">
+                    <div class="level-item ">
+                        <audio id="player " controls>
+                        <source src="# " type="audio/mp3 " />
+                        <source src="# " type="audio/ogg " />
+                    </audio>
+                    </div>
+
+                </div>
+
+
+
+            </nav>
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <nav class="navbar is-fixed-bottom has-background-black-ter ">
+        <div class="level ">
+            <div class="level-item ">
+                <audio id="player " controls>
+                        <source src="# " type="audio/mp3 " />
+                        <source src="# " type="audio/ogg " />
+                    </audio>
+            </div>
+            <div class="level-item is-hidden-mobile ">
+                <p class="has-text-white ">OOP Project by Steven Chen, Daniel Na and Cindy Le</p>
+
+            </div>
+        </div>
+
+
+
+    </nav>
+
+
+
+
+
+
+</body>
+<!-- <script>
+    document.querySelector('a#open-modal').addEventListener('click', function(event) {
+        event.preventDefault();
+        var modal = document.querySelector('.modal');
+        var html = document.querySelector('html');
+        modal.classList.add('is-active');
+        html.classList.add('is-clipped');
+
+        modal.querySelector('.modal-background').addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.classList.remove('is-active');
+            html.classList.remove('is-clipped');
+        });
+    });
+</script> -->
+
 </html>

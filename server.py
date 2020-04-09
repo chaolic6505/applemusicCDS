@@ -131,11 +131,8 @@ def home():
 @app.route('/songs')
 def song():
     form = SongInformationForm(request.form)
-
     db.session.commit()
-
     songs = Song.query.all()
-
     return render_template('songlist.html', songs=songs, form=form)
 
 
@@ -166,7 +163,6 @@ def save_song_info(song_id):
                                form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         Lyric = get_song_lyric(form.new_song_artist.data,
                                form.new_song_title.data)
-
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
@@ -180,7 +176,7 @@ def save_song_info(song_id):
     print(songs)
     return redirect('/songs')
 
-
+ 
 @app.route('/deleteSong/<int:song_id>')
 def delete_song(song_id):
     print(song_id)
@@ -188,7 +184,6 @@ def delete_song(song_id):
     Song.query.filter_by(id=song_id).delete()
     db.session.commit()
     songs = Song.query.all()
-
     return redirect('/songs')
 
 
