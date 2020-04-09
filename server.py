@@ -137,6 +137,7 @@ def save_song_info(song_id):
                                form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         lyric = get_song_lyric(form.new_song_artist.data,
                                form.new_song_title.data)
+        
         song = Song.query.filter_by(id=song_id).first()
         song.title = form.new_song_title.data
         song.artist = form.new_song_artist.data
