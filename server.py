@@ -199,7 +199,6 @@ def save():
                                     form.new_song_title.data, requests, ALBUM_COVER_SIZE)
         lyric = get_song_lyric(form.new_song_artist.data,
                                form.new_song_title.data)
-        print(lyric)
         f = request.files.get('file')
         for key, f in request.files.items():
             if key.startswith('file'):
@@ -207,7 +206,6 @@ def save():
                 s3.upload_file(f'./upload/{f.filename}', S3_Bucket_Name,
                                f'{f.filename}', ExtraArgs={'ContentType': 'audio/mpeg'})
                 url = f"https://cds-apple-music.s3-us-west-2.amazonaws.com/{f.filename}"
-                print(url)
                 db.session.add(Song(rating=form.new_song_rating.data, title=form.new_song_title.data,
                                     artist=form.new_song_artist.data, album=Album_Cover, genre=song_genre, song_url=url, lyrics=lyric))
                 db.session.add(Album(cover_photo=Album_Cover))
