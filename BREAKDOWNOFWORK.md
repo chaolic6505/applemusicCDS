@@ -23,10 +23,19 @@
 
 ---
 
-## Name of Team Member: 
+## Name of Team Member: Daniel Na
 ### Tasks Worked On:
 
-1. Task Name: 
-    - Explanation - 
+1. Task Name: Back end
+    - Explanation - Helped set up classes, helped research flask and sqlite3
 
-2. Task Name: 
+2. Task Name: front-end
+    - Explanation - implement initial front-end html css and jinja2
+    
+3. Task Name: Readme
+    - Explanation : Contructed the Readme
+    
+4. Task Name: Code Testing
+    - Explanation: Tested the application to see if everything work correctly.
+    
+
