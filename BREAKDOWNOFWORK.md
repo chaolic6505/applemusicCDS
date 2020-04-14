@@ -48,9 +48,12 @@
     - Explanation - Implemented and edited a portion of front-end html Bulma css .
     
 3. Task Name: Back-end
-    - Explanation : Contructed entire back-end logic and jinja2.
+    - Explanation : Contructed entire back-end logic .
     
 4. Task Name: Code and file clean up
     - Explanation: Removed unneeded lines of codes.
+
+5. Task Name: Front-end
+    - Explanation - Implemented entire  jinja2  .
     
 
