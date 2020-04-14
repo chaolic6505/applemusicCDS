@@ -16,7 +16,7 @@
     - Explanation - edited and tested code to ensure it line up with requirements
   
 5. Task Name: Code and file clean up
-    - Explanation - removed unneeded files, and modularize parts of the htnl
+    - Explanation - removed unneeded files, and modularize parts of the html
     
 6. Task Name: Github
     - Explanation - handled merge conflicts and version control to ensure code was consistently working on the master and development branches
@@ -37,5 +37,20 @@
     
 4. Task Name: Code Testing
     - Explanation: Tested the application to see if everything work correctly.
+
+## Name of Team Member: Steven Chen
+### Tasks Worked On:
+
+1. Task Name: Back end
+    - Explanation - Helped set up classes
+
+2. Task Name: Front-end
+    - Explanation - Implemented and edited a portion of front-end html Bulma css and jinja2.
+    
+3. Task Name: Back-end
+    - Explanation : Contructed entire back-end logic
+    
+4. Task Name: Code and file clean up
+    - Explanation: Removed unneeded lines of codes.
     
 
